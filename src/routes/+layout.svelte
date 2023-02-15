@@ -1,16 +1,15 @@
 <script>
   import "../app.css";
-  import Navbar from "$lib/components/Navbar.svelte";
+  import { SvelteUIProvider } from "@svelteuidev/core"
 </script>
 
-<div class="navbar">
-  <Navbar />
-</div>
-<slot />
+<SvelteUIProvider>
+  <div class="content">
+    <slot />
+  </div>
+</SvelteUIProvider>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
-  .navbar {
-    font-family: Righteous;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 </style>
