@@ -3,6 +3,8 @@
   import { SvelteUIProvider } from "@svelteuidev/core";
   import { navigating } from "$app/stores";
   import { goto } from "$app/navigation";
+  import Transition from "$lib/components/PageTransition.svelte";
+  import type { PageData } from './$types';
 
   const parseCookie = (str: any) =>
     str
@@ -22,13 +24,17 @@
       }
     }
   }
+
+  export let data: PageData;
 </script>
 
-<SvelteUIProvider>
-  <div class="content h-full">
-    <slot />
-  </div>
-</SvelteUIProvider>
+<Transition refresh={data.pathname}>
+  <SvelteUIProvider>
+    <div class="content h-full">
+      <slot />
+    </div>
+  </SvelteUIProvider>
+</Transition>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
