@@ -6,6 +6,10 @@
 
 <svelte:head>
   <title>FITnFINE | Time To Get Serious!</title>
+  <description
+    >Ever had a diet or a workout stashed away in the corner of your brain?
+    Well, that's about to change!</description
+  >
 </svelte:head>
 
 <div class="heroSection flex overflow-hidden">
