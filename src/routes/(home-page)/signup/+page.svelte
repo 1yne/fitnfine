@@ -88,6 +88,44 @@
           error={form?.invalid}
           on:input={onChange}
         />
+        <div class="flex">
+          <TextInput
+            placeholder="Weight (kg)"
+            class="!font-nunito mr-4"
+            name="weight"
+            required={true}
+            override={{
+              input: {
+                py: "1rem",
+                px: "1rem",
+                backgroundColor: "#2A9D8F !important",
+                borderColor: "#2A9D8F !important",
+                borderBottomColor: "black !important",
+                color: "white !important",
+              },
+            }}
+            error={form?.invalid}
+            on:input={onChange}
+          />
+          <TextInput
+            placeholder="Height (cm)"
+            class="!font-nunito"
+            name="height"
+            required={true}
+            override={{
+              input: {
+                py: "1rem",
+                px: "1rem",
+                backgroundColor: "#2A9D8F !important",
+                borderColor: "#2A9D8F !important",
+                borderBottomColor: "black !important",
+                color: "white !important",
+              },
+            }}
+            error={form?.invalid}
+            on:input={onChange}
+          />
+        </div>
         <button
           class="w-full bg-[#E76F51] hover:bg-[#cf6348] transition-smooth rounded-lg py-3 text-white"
           >Create account</button

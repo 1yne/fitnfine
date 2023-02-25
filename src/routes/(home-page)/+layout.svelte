@@ -1,19 +1,11 @@
 <script lang="ts">
-  import "../app.css";
+  import "../../app.css";
   import { SvelteUIProvider } from "@svelteuidev/core";
   import { navigating } from "$app/stores";
   import { goto } from "$app/navigation";
   import Transition from "$lib/components/PageTransition.svelte";
-  import type { PageData } from './$types';
-
-  const parseCookie = (str: any) =>
-    str
-      .split(";")
-      .map((v: any) => v.split("="))
-      .reduce((acc: any, v: any) => {
-        acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-        return acc;
-      }, {});
+  import type { PageData } from "./$types";
+  import { parseCookie } from "$lib/utils";
 
   $: if ($navigating) {
     if ($navigating.to?.route.id?.includes("dashboard")) {
@@ -28,13 +20,13 @@
   export let data: PageData;
 </script>
 
-<Transition refresh={data.pathname}>
-  <SvelteUIProvider>
-    <div class="content h-full">
+<SvelteUIProvider override={{ height: "100%" }}>
+  <div class="content h-full">
+    <Transition refresh={data.pathname}>
       <slot />
-    </div>
-  </SvelteUIProvider>
-</Transition>
+    </Transition>
+  </div>
+</SvelteUIProvider>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");

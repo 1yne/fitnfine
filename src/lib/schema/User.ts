@@ -23,6 +23,8 @@ const UserSchema = new Schema({
   passwordHash: reqString,
   userAuthToken: reqString,
   email: reqString,
+  weight: reqNum,
+  height: reqNum
 });
 
 const name = "Users";
