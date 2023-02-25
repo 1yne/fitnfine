@@ -80,7 +80,7 @@ async function loadUserWorkouts(cookies: Cookies) {
   let choices: any = response.data.choices[0].text?.split(/\r?\n/).filter((val) => {
     return val.length !== 0;
   });
-  // console.log("Before requesting data: ", choices);
+  console.log("Before requesting data: ", choices);
   for (var i = 0; i < choices.length; i++) {
     choices[i] = choices[i].slice(3);
     // console.log("Workout name: ", choices[i])
@@ -92,7 +92,7 @@ async function loadUserWorkouts(cookies: Cookies) {
         }
       }
     );
-    // console.log("Response data: ", workoutRequest.data);
+    console.log("Response data: ", workoutRequest.data);
     if (workoutRequest.data.length === 0) {
       choices.splice(i, 1)
       i -= 1
@@ -105,11 +105,11 @@ async function loadUserWorkouts(cookies: Cookies) {
         id: workoutId
       }
     }
-    // console.log("After processing: ", choices)
-    // console.log("var i = ", i)
+    console.log("After processing: ", choices)
+    console.log("var i = ", i)
     continue
   }
-  // console.log("After requesting data: ", choices);
+  console.log("After requesting data: ", choices);
 
   return choices
 }
