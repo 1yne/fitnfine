@@ -33,7 +33,7 @@
 </div>
 <Card class="rounded-lg drop-shadow-lg mt-10 px-5 py-5">
   <h1 class="text-2xl">Steps:</h1>
-  {#if instructions[0] === " "}
+  {#if instructions[0] !== " "}
     <ul class="mx-5 mt-3">
       {#each instructions as instruction, i}
         {#if instruction.length > 0}
