@@ -83,7 +83,7 @@ async function loadUserWorkouts(cookies: Cookies) {
   console.log("Before requesting data: ", choices);
   for (var i = 0; i < choices.length; i++) {
     choices[i] = choices[i].slice(3);
-    // console.log("Workout name: ", choices[i])
+    console.log("Workout name: ", choices[i])
     const workoutRequest = await axios.get(
       `https://api.api-ninjas.com/v1/exercises?name=${choices[i]}`,
       {
