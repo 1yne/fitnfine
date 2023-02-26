@@ -29,7 +29,7 @@
         Well, that's about to change!
       </p>
       <a
-        class="font-nunito bg-secondBackground px-10 py-4 rounded-lg text-white text-xl transition-smooth hover:bg-secondBackgroundHover"
+        class="font-nunito bg-secondBackground px-10 py-4 rounded-lg text-white text-xl transition-all hover:bg-secondBackgroundHover"
         href="/signup">Get Started</a
       >
     </div>

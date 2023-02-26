@@ -4,12 +4,9 @@
 
 @layer components {
   .font-righteous {
-    font-family: Righteous
+    font-family: Righteous;
   }
   .font-nunito {
-    font-family: Nunito
-  }
-  .transition-smooth {
-    @apply transition-all ease-in duration-100
+    font-family: Nunito;
   }
 }

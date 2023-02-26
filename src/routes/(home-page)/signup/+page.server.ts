@@ -9,8 +9,8 @@ export const actions: Actions = {
     const username = formData.get("username");
     const password = formData.get("password");
     const email = formData.get("email");
-    const weight = formData.get("weight")
-    const height = formData.get("height")
+    const weight = formData.get("weight");
+    const height = formData.get("height");
     const salt = bcrypt.genSaltSync(10);
 
     const data = await User.findOne({ username });
@@ -35,7 +35,7 @@ export const actions: Actions = {
       email,
       userAuthToken: crypto.randomUUID(),
       weight,
-      height
+      height,
     };
 
     await new User(object).save();

@@ -70,7 +70,7 @@
           on:input={onChange}
         />
         <button
-          class="w-full bg-[#E76F51] hover:bg-[#cf6348] transition-smooth rounded-lg py-3 text-white"
+          class="w-full bg-[#E76F51] hover:bg-[#cf6348] transition-all rounded-lg py-3 text-white"
           >Login</button
         >
       </form>

@@ -32,15 +32,13 @@
       case "stretching":
         icon = StretchingIcon;
         break;
-      case "plyometrics": 
-        icon = PlyometricsIcon
+      case "plyometrics":
+        icon = PlyometricsIcon;
     }
   }
 </script>
 
-<Card
-  class="bg-white hover:bg-[#ededed] transition-smooth cursor-pointer"
->
+<Card class="bg-white hover:bg-[#ededed] transition-all cursor-pointer">
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div on:click={() => goto(`/dashboard/workouts/${id}`)}>
     <div class="flex justify-between mb-3">
