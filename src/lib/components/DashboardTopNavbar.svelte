@@ -7,7 +7,7 @@
   import { goto } from "$app/navigation";
 </script>
 
-<div class="w-full items-center px-5 py-5">
+<div class="w-full items-center px-5 py-5 h-16 bg-blackBackground text-white">
   {#if $page.url.pathname === "/dashboard"}
     <h1
       class="font-nunito text-3xl font-extrabold"
@@ -23,6 +23,7 @@
       on:click={() => goto("/dashboard")}
       in:fly={{ y: 50, duration: 500, delay: 700 }}
       out:fly={{ y: 50, duration: 500 }}
+      class="cursor-pointer"
     >
       <ArrowLeft size={30} />
     </div>

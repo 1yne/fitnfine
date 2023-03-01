@@ -8,8 +8,8 @@
   <title>Dashboard</title>
 </svelte:head>
 
-<div class="py-5">
-  <h1 class="text-xl font-extrabold mb-3">Workouts</h1>
+<div class="py-5 text-white">
+  <h1 class="text-xl font-extrabold mb-3">Recommended workouts:</h1>
   <SimpleGrid cols={3}>
     {#if $userWorkoutDataStore.length > 0}
       {#each $userWorkoutDataStore as userWorkout}

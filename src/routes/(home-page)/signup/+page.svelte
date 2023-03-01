@@ -14,7 +14,7 @@
   <title>Sign Up</title>
 </svelte:head>
 
-<div class="bg-secondBackground h-[100vh] flex w-full">
+<div class="bg-blackBackground h-[100vh] flex w-full">
   <div class="w-8/12 overflow-hidden">
     <img src="/SignUpImage.jpeg" alt="A fruit bowl" />
   </div>
@@ -40,9 +40,9 @@
               py: "1rem",
               px: "1rem",
               width: "100%",
-              backgroundColor: "#2A9D8F !important",
-              borderColor: "#2A9D8F !important",
-              borderBottomColor: "black !important",
+              backgroundColor: "#1c1c1c !important",
+              borderColor: "#1c1c1c !important",
+              borderBottomColor: "#029987 !important",
               color: "white !important",
             },
           }}
@@ -60,9 +60,9 @@
               py: "1rem",
               px: "1rem",
               width: "100%",
-              backgroundColor: "#2A9D8F !important",
-              borderColor: "#2A9D8F !important",
-              borderBottomColor: "black !important",
+              backgroundColor: "#1c1c1c !important",
+              borderColor: "#1c1c1c !important",
+              borderBottomColor: "#029987 !important",
               color: "white !important",
             },
           }}
@@ -74,14 +74,15 @@
           class="w-full !font-nunito"
           name="password"
           required={true}
+          type="password"
           override={{
             input: {
               py: "1rem",
               px: "1rem",
               width: "100%",
-              backgroundColor: "#2A9D8F !important",
-              borderColor: "#2A9D8F !important",
-              borderBottomColor: "black !important",
+              backgroundColor: "#1c1c1c !important",
+              borderColor: "#1c1c1c !important",
+              borderBottomColor: "#029987 !important",
               color: "white !important",
             },
           }}
@@ -98,9 +99,9 @@
               input: {
                 py: "1rem",
                 px: "1rem",
-                backgroundColor: "#2A9D8F !important",
-                borderColor: "#2A9D8F !important",
-                borderBottomColor: "black !important",
+                backgroundColor: "#1c1c1c !important",
+                borderColor: "#1c1c1c !important",
+                borderBottomColor: "#029987 !important",
                 color: "white !important",
               },
             }}
@@ -116,9 +117,9 @@
               input: {
                 py: "1rem",
                 px: "1rem",
-                backgroundColor: "#2A9D8F !important",
-                borderColor: "#2A9D8F !important",
-                borderBottomColor: "black !important",
+                backgroundColor: "#1c1c1c !important",
+                borderColor: "#1c1c1c !important",
+                borderBottomColor: "#029987 !important",
                 color: "white !important",
               },
             }}
@@ -127,13 +128,13 @@
           />
         </div>
         <button
-          class="w-full bg-[#E76F51] hover:bg-[#cf6348] transition-all rounded-lg py-3 text-white"
+          class="w-full bg-orangeText hover:bg-orangeTextHover transition-all rounded-lg py-3 text-white mt-3"
           >Create account</button
         >
       </form>
       <div class="h-full flex items-end justify-end">
         <p class="text-white">
-          Already created an account? <a href="/login" class="text-[#E9C46A]"
+          Already created an account? <a href="/login" class="text-logo"
             >Login in</a
           >
         </p>

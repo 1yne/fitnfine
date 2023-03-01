@@ -19,11 +19,13 @@
   <title>FITnFINE | {workoutData.name}</title>
 </svelte:head>
 
-<div class="flex justify-between">
+<div class="flex justify-between text-white">
   <div class="flex items-center px-5">
     <h1 class="text-4xl mb-5">{workoutData.name}</h1>
   </div>
-  <Card class="flex justify-evenly gap-10 drop-shadow-lg rounded-lg px-5">
+  <Card
+    class="flex justify-evenly gap-10 drop-shadow-lg rounded-lg px-5 bg-workoutCardBG text-white hover:bg-workoutCardBGHover transition-all"
+  >
     <div class="flex flex-col">
       <h1>Difficulty: {workoutData.difficulty}</h1>
       <h1>Type: {workoutData.type}</h1>
@@ -31,7 +33,9 @@
     <h1>Exercises the {workoutData.muscle}</h1>
   </Card>
 </div>
-<Card class="rounded-lg drop-shadow-lg mt-10 px-5 py-5">
+<Card
+  class="rounded-lg drop-shadow-lg mt-10 px-5 py-5 bg-workoutCardBG text-white hover:bg-workoutCardBGHover transition-all"
+>
   <h1 class="text-2xl">Steps:</h1>
   {#if instructions[0] !== " "}
     <ul class="mx-5 mt-3">

@@ -15,6 +15,18 @@
         goto("/login");
       }
     }
+    if ($navigating.from?.route.id === "/(home-page)") {
+      if (
+        $navigating.to?.route.id?.includes("login") ||
+        $navigating.to?.route.id?.includes("signup")
+      ) {
+        if (!document.cookie) {
+          goto("/signup");
+        } else if (!parseCookie(document.cookie).session) {
+          goto("/dashboard");
+        }
+      }
+    }
   }
 
   export let data: PageData;

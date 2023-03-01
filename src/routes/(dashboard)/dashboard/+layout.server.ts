@@ -49,6 +49,33 @@ const workoutResponse = [
   },
 ];
 
+const openAIResponse = {
+  id: "cmpl-6m3rqkUaMgH3BrQF18JGKh8OE6ISp",
+  object: "text_completion",
+  created: 1676912630,
+  model: "text-davinci-003",
+  choices: [
+    {
+      text:
+        "\n" +
+        "\n" +
+        "1. Bodyweight Squats\n" +
+        "\n" +
+        "2. Push-Ups\n" +
+        "\n" +
+        "3. Lunges\n" +
+        "\n" +
+        "4. Plank\n" +
+        "\n" +
+        "5. Jumping Jacks",
+      index: 0,
+      logprobs: null,
+      finish_reason: "length",
+    },
+  ],
+  usage: { prompt_tokens: 16, completion_tokens: 256, total_tokens: 272 },
+};
+
 export const load: LayoutServerLoad = ({
   url: { pathname },
   cookies,
