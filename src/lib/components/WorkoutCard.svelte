@@ -38,8 +38,10 @@
   }
 </script>
 
+
 <Card
-  class="bg-workoutCardBG text-white hover:bg-workoutCardBGHover transition-all cursor-pointer"
+  override={{ backgroundColor: "#353536", color: "white" }}
+  class="hover:bg-workoutCardBGHover transition-all cursor-pointer"
 >
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div on:click={() => goto(`/dashboard/workouts/${id}`)}>
