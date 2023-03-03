@@ -18,9 +18,9 @@
 
 <SvelteUIProvider override={{ height: "100%" }}>
   <div class="content h-full">
-    <div class="flex h-full">
+    <div class="flex h-full bg-blackBackground">
       <DashboardSideNavbar />
-      <div class="w-full ml-16  bg-blackBackground">
+      <div class="w-full ml-16">
         <DashboardTopNavbar />
         <PageTransition refresh={data.pathname}>
           <div class="content px-5 pb-10 font-nunito">
