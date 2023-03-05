@@ -11,7 +11,7 @@
 </script>
 
 <form
-  class="bg-background h-[100vh] w-16 py-3 flex items-center justify-between gap-5 flex-col fixed"
+  class="bg-darkGreen h-[100vh] w-16 py-3 flex items-center justify-between gap-5 flex-col fixed"
   in:fly="{{ x: -50, duration: 1050 }}"
   out:fly="{{ x: -50, duration: 300 }}"
 >
@@ -28,7 +28,7 @@
       class="w-full flex justify-center py-2 cursor-pointer"
       on:click={logout}
     >
-      <Logout size={35} class="text-logo hover:text-logoHover transition-all" />
+      <Logout size={35} class="text-yellow hover:text-yellowHover transition-all" />
     </div>
   </div>
 </form>

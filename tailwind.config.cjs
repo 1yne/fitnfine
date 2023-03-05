@@ -4,14 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#264653",
-        secondBackground: "#029987",
-        secondBackgroundHover: "#218074",
-        logo: "#e6b335",
-        logoHover: "#c99d2c",
-        orangeText: "#e35936",
-        orangeTextHover: "#c74e30",
-        blackBackground: "#1c1c1c",
+        darkGreen: "#264653",
+        teal: "#029987",
+        tealHover: "#218074",
+        yellow: "#e6b335",
+        yellowHover: "#c99d2c",
+        orange: "#e35936",
+        orangeHover: "#c74e30",
+        background: "#1c1c1c",
         workoutCardBG: "#353536",
         workoutCardBGHover: "#494a4a",
       },

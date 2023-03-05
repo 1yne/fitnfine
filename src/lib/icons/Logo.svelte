@@ -28,9 +28,9 @@
 
 <style>
   svg:hover > path.outerText {
-    @apply fill-logoHover;
+    @apply fill-yellowHover;
   }
   svg:hover > path.innerText {
-    @apply fill-orangeTextHover;
+    @apply fill-orangeHover;
   }
 </style>

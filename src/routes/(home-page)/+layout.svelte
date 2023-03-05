@@ -32,7 +32,7 @@
   export let data: PageData;
 </script>
 
-<SvelteUIProvider override={{ height: "100%" }}>
+<SvelteUIProvider override={{ height: "100%", backgroundColor: "#1c1c1c" }}>
   <div class="content h-full">
     <Transition refresh={data.pathname}>
       <slot />

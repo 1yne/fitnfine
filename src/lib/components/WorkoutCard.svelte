@@ -46,7 +46,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div on:click={() => goto(`/dashboard/workouts/${id}`)}>
     <div class="flex justify-between mb-3">
-      <div class="bg-logo rounded-lg p-2 w-16 flex justify-center">
+      <div class="bg-yellow rounded-lg p-2 w-16 flex justify-center">
         <svelte:component this={icon} size="25" fill="#2A9D8F" />
       </div>
       <div class="text-right">
@@ -55,7 +55,7 @@
             difficulty === "beginner"
               ? "text-emerald-500"
               : difficulty === "intermediate"
-              ? "text-yellow-400"
+              ? "text-yellow"
               : "text-rose-500"
           }`}
         >

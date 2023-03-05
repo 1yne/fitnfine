@@ -13,15 +13,15 @@
   />
 </svelte:head>
 
-<div class="h-[100vh] flex overflow-hidden background">
-  <div class="w-1/2 flex-col flex items-center bg-blackBackground">
+<div class="h-[100vh] flex overflow-hidden">
+  <div class="w-1/2 flex-col flex items-center">
     <div class="w-3/4 py-5">
-      <a class="cursor-pointer text-4xl text-logo font-righteous" href="/"
+      <a class="cursor-pointer text-4xl text-yellow font-righteous" href="/"
         >FITnFINE</a
       >
     </div>
     <div class="w-3/4 flex gap-5 flex-col mt-16">
-      <h1 class="text-7xl text-orangeText font-righteous">
+      <h1 class="text-7xl text-orange font-righteous">
         Time to get serious!
       </h1>
       <p class="text-white mt-7 mb-10 text-xl font-nunito font-bold">
@@ -29,7 +29,7 @@
         recipes, designed by our AI to help you reach your full potential.
       </p>
       <a
-        class="font-nunito bg-secondBackground text-white text-center py-4 w-1/3 rounded-lg text-lg transition-all hover:bg-secondBackgroundHover"
+        class="font-nunito bg-teal text-white text-center py-4 w-1/3 rounded-lg text-lg transition-all hover:bg-tealHover"
         href="/signup">Get Started</a
       >
     </div>
@@ -37,7 +37,7 @@
       <Plant2 />
     </div>
   </div>
-  <div class="w-1/2 flex justify-center flex-col bg-blackBackground">
+  <div class="w-1/2 flex justify-center flex-col">
     <Animation duration={8} animation="float">
       <div class="flex justify-center mx-5">
         <HeroSectionBg1 width="600" height="2400" />

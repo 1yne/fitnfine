@@ -16,9 +16,9 @@
   }
 </script>
 
-<SvelteUIProvider override={{ height: "100%" }}>
+<SvelteUIProvider override={{ height: "100%", backgroundColor: "#1c1c1c" }}>
   <div class="content h-full">
-    <div class="flex h-full bg-blackBackground">
+    <div class="flex h-full">
       <DashboardSideNavbar />
       <div class="w-full ml-16">
         <DashboardTopNavbar />

@@ -14,7 +14,7 @@
   <title>Login</title>
 </svelte:head>
 
-<div class="bg-blackBackground h-[100vh] flex w-full">
+<div class="h-[100vh] flex w-full">
   <div class="w-8/12 overflow-hidden">
     <img src="/LoginImage.jpeg" alt="A fruit bowl" />
   </div>
@@ -71,13 +71,13 @@
           on:input={onChange}
         />
         <button
-          class="w-full bg-orangeText hover:bg-orangeTextHover transition-all rounded-lg py-3 text-white mt-3"
+          class="w-full bg-orange hover:bg-orangeHover transition-all rounded-lg py-3 text-white mt-3"
           >Login</button
         >
       </form>
       <div class="h-full flex items-end justify-end">
         <p class="text-white">
-          Haven't yet created an account? <a href="/signup" class="text-logo"
+          Haven't yet created an account? <a href="/signup" class="text-yellow"
             >Sign up</a
           >
         </p>

@@ -7,7 +7,7 @@
   import { goto } from "$app/navigation";
 </script>
 
-<div class="w-full items-center px-5 py-5 h-16 bg-blackBackground text-white">
+<div class="w-full items-center px-5 py-5 h-16 bg-background text-white">
   {#if $page.url.pathname === "/dashboard"}
     <h1
       class="font-nunito text-3xl font-extrabold"
