@@ -30,7 +30,13 @@ async function verifyUserIsLoggedIn({ event, resolve }) {
       throw redirect(303, "/login");
     } else {
       const userData = await User.findOne({ userAuthToken: event.cookies.get("session") })
-      if (!userData) throw redirect(303, "/login")
+      if (!userData) {
+        throw redirect(303, "/login")
+        event.cookies.set("session", "", {
+          path: "/",
+          expires: new Date(0),
+        })
+      }
     }
   }
   if (
