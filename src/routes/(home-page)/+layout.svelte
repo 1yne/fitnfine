@@ -9,9 +9,7 @@
 
   $: if ($navigating) {
     if ($navigating.to?.route.id?.includes("dashboard")) {
-      if (!document.cookie) {
-        goto("/login");
-      } else if (!parseCookie(document.cookie).session) {
+      if (!document.cookie || !parseCookie(document.cookie).session) {
         goto("/login");
       }
     }
