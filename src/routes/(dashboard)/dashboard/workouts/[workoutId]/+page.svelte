@@ -25,8 +25,8 @@
       <h1 class="text-4xl mb-5">{workoutData.name}</h1>
     </div>
     <Card
-      override={{ backgroundColor: "#353536", color: "white" }}
-      class="flex justify-evenly gap-10 drop-shadow-lg rounded-lg px-5 hover:bg-cardBGHover transition-all"
+      override={{ backgroundColor: "#353536", color: "white", display: "flex", justifyContent: "space-evenly", gap: "2.5rem", borderRadius: "0.5rem", "px": "1.25rem" }}
+      class="hover:bg-cardBGHover transition-all"
     >
       <div class="flex flex-col">
         <h1>Difficulty: {workoutData.difficulty}</h1>
@@ -36,8 +36,8 @@
     </Card>
   </div>
   <Card
-    override={{ backgroundColor: "#353536", color: "white" }}
-    class="rounded-lg drop-shadow-lg mt-10 px-5 py-5 hover:bg-cardBGHover transition-all"
+    override={{ backgroundColor: "#353536", color: "white", borderRadius: "0.5rem", marginTop: "2.5rem", padding: "1.25rem" }}
+    class="hover:bg-cardBGHover transition-all"
   >
     <h1 class="text-2xl">Steps:</h1>
     {#if instructions[0] !== " "}

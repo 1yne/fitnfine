@@ -21,8 +21,8 @@
         <h1 class="text-5xl font-black mb-5">{dietData.name}</h1>
       </div>
       <Card
-        override={{ backgroundColor: "#353536", color: "white" }}
-        class="flex justify-between gap-7 drop-shadow-lg rounded-lg hover:bg-cardBGHover transition-all px-5"
+        override={{ backgroundColor: "#353536", color: "white", display: "flex", justifyContent: "space-between", gap: "1.75rem", borderRadius: "0.5rem", px: "1.25rem" }}
+        class="drop-shadow-lg hover:bg-cardBGHover transition-all"
       >
         <div class="flex flex-col">
           <h1>Cuisine: {capitalizeFirstLetter(dietData.cuisineType[0])}</h1>
@@ -37,8 +37,8 @@
   </div>
   <div class="px-5">
     <Card
-      override={{ backgroundColor: "#353536", color: "white" }}
-      class="rounded-lg drop-shadow-lg mt-10 px-5 py-5 hover:bg-cardBGHover transition-all flex"
+      override={{ backgroundColor: "#353536", color: "white", borderRadius: "0.5rem", marginTop: "2.5rem", padding: "1.25rem", display: "flex" }}
+      class="drop-shadow-lg hover:bg-cardBGHover transition-all"
     >
       <div class="w-4/6">
         <h1 class="text-2xl">Ingredients:</h1>
