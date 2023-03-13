@@ -1,14 +1,16 @@
 <script>
   import WorkoutCard from "$lib/components/WorkoutCard.svelte";
+  import RecipeCard from "$lib/components/RecipeCard.svelte";
   import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
-  import { SimpleGrid } from "@svelteuidev/core";
+  import { userDietsStore } from "$lib/stores/userDiets";
+  import { SimpleGrid, Grid } from "@svelteuidev/core";
 </script>
 
 <svelte:head>
   <title>Dashboard</title>
 </svelte:head>
 
-<div class="py-5 text-white">
+<div class="p-5 text-white">
   <h1 class="text-xl font-extrabold mb-3">Recommended workouts:</h1>
   <SimpleGrid cols={3}>
     {#if $userWorkoutDataStore.length > 0}
@@ -19,4 +21,17 @@
       <h1>There aren't any workouts for you! Please try again</h1>
     {/if}
   </SimpleGrid>
+  <br />
+  <div>
+    <h1 class="text-xl font-extrabold mb-3">Recommended recipes:</h1>
+    <SimpleGrid spacing="xl" cols={4}>
+      {#if $userDietsStore.length > 0}
+        {#each $userDietsStore as userDiet}
+          <RecipeCard {...userDiet} />
+        {/each}
+      {:else}
+        <h1>There aren't any recipes for you! Please try again</h1>
+      {/if}
+    </SimpleGrid>
+  </div>
 </div>

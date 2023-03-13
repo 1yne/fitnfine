@@ -13,3 +13,15 @@ export type UserStoreType = {
   weight: number;
   height: number;
 };
+
+export type UserDietStoreType = {
+  id: string,
+  name: string,
+  thumbnail: string,
+  ingredients: string[],
+  cuisineType: string[],
+  steps: string,
+  calories: number,
+  source: string,
+  serves: number
+}

@@ -41,13 +41,13 @@
 
 <Card
   override={{ backgroundColor: "#353536", color: "white" }}
-  class="hover:bg-workoutCardBGHover transition-all cursor-pointer"
+  class="hover:bg-cardBGHover transition-all cursor-pointer"
 >
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div on:click={() => goto(`/dashboard/workouts/${id}`)}>
     <div class="flex justify-between mb-3">
       <div class="bg-yellow rounded-lg p-2 w-16 flex justify-center">
-        <svelte:component this={icon} size="25" fill="#2A9D8F" />
+        <svelte:component this={icon} size="25" fill="#029987" />
       </div>
       <div class="text-right">
         <h1

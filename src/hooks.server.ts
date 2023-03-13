@@ -4,7 +4,6 @@ import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import "dotenv/config";
 import { redirect } from "@sveltejs/kit";
-import User from "$lib/schema/User"
 
 const { connection, connect } = mongoose;
 
@@ -29,14 +28,16 @@ async function verifyUserIsLoggedIn({ event, resolve }) {
     if (!event.cookies.get("session")) {
       throw redirect(303, "/login");
     } else {
-      const userData = await User.findOne({ userAuthToken: event.cookies.get("session") })
-      if (!userData) {
-        event.cookies.set("session", "", {
-          path: "/",
-          expires: new Date(0),
-        })
-        throw redirect(303, "/login")
-      }
+      // console.log("before")
+      // const userData = await User.findOne({ userAuthToken: event.cookies.get("session") })
+      // console.log("after")
+      // if (!userData) {
+      //   event.cookies.set("session", "", {
+      //     path: "/",
+      //     expires: new Date(0),
+      //   })
+      //   throw redirect(303, "/login")
+      // }
     }
   }
   if (

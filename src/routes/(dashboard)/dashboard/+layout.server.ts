@@ -6,75 +6,8 @@ import axios from "axios";
 import { get } from "svelte/store";
 import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
 import { currentUserStore } from "$lib/stores/currentUser";
-
-const workoutResponse = [
-  {
-    id: "push-ups_with_feet_on_an_exercise_ball",
-    name: "Push-Ups With Feet On An Exercise Ball",
-    type: "strength",
-    muscle: "chest",
-    equipment: "body_only",
-    difficulty: "intermediate",
-    instructions:
-      "Lie on the floor face down and place your hands about 36 inches apart from each other holding your torso up at arms length. Place your toes on top of an exercise ball. This will allow your body to be elevated. Lower yourself until your chest almost touches the floor as you inhale. Using your pectoral muscles, press your upper body back up to the starting position and squeeze your chest. Breathe out as you perform this step. After a second pause at the contracted position, repeat the movement for the prescribed amount of repetitions. Variations: Another way to perform this exercise is to use a flat bench to elevate your body instead of an exercise ball. See Also: Push-Up",
-  },
-  {
-    id: "dumbell_lunges",
-    name: "Dumbbell Lunges",
-    type: "stretching",
-    muscle: "quadriceps",
-    equipment: "dumbbell",
-    difficulty: "intermediate",
-    instructions:
-      "Stand with your torso upright holding two dumbbells in your hands by your sides. This will be your starting position. Step forward with your right leg around 2 feet or so from the foot being left stationary behind and lower your upper body down, while keeping the torso upright and maintaining balance. Inhale as you go down. Note: As in the other exercises, do not allow your knee to go forward beyond your toes as you come down, as this will put undue stress on the knee joint. Make sure that you keep your front shin perpendicular to the ground. Using mainly the heel of your foot, push up and go back to the starting position as you exhale. Repeat the movement for the recommended amount of repetitions and then perform with the left leg.  Caution: This is a movement that requires a great deal of balance so if you suffer from balance problems you may wish to either avoid it or just use your own bodyweight while holding on to a fixed object. Definitely never perform with a barbell on your back if you suffer from balance issues. Variations: There are several ways to perform the exercise. One way is to alternate each leg. For instance do one repetition with the right, then the left, then the right and so on. The other way is to do what I call a static lunge where your starting position is with one of your feet already forward. In this case, you just go up and down from that starting position until you are done with the recommended amount of repetitions. Then you switch legs and do the same. A more challenging version is the walking lunges where you walk across the room but in a lunging fashion. For walking lunges the leg being left back has to be brought forward after the lunging action has happened in order to continue moving ahead. This version is reserved for the most advanced athletes. Lunges can be performed with dumbbells as described above or with a barbell on the back, though the barbell variety is better suited for the advanced athletes who have mastered the exercise and no longer have balance issues.",
-  },
-  {
-    id: "partner_plank_band_row",
-    name: "Partner plank band row",
-    type: "cardio",
-    muscle: "abdominals",
-    equipment: "bands",
-    difficulty: "intermediate",
-    instructions:
-      "Get into a plank position with your weight evenly distributed on your elbows and toes, keeping your back straight and your hips in line with your back. Your feet should be slightly spread for balance. Your partner should mirror your body position about 5 feet in front of and facing you. Each person should grasp one end of an elastic band with the right hand. This will be your starting position. Maintaining your body weight on three limbs, elevate the right hand and simultaneously pull the elbow back towards your hip in a rowing movement. Return to the start position allowing your elbow to re-establish contact with the floor. Do all reps for one side before switching sides.",
-  },
-  {
-    id: "partner_plank_band",
-    name: "Partner plank band",
-    type: "plyometrics",
-    muscle: "abdominals",
-    equipment: "bands",
-    difficulty: "intermediate",
-    instructions: "",
-  },
-];
-
-const openAIResponse = {
-  id: "cmpl-6m3rqkUaMgH3BrQF18JGKh8OE6ISp",
-  object: "text_completion",
-  created: 1676912630,
-  model: "text-davinci-003",
-  choices: [
-    {
-      text:
-        "\n" +
-        "\n" +
-        "1. Bodyweight Squats\n" +
-        "\n" +
-        "2. Push-Ups\n" +
-        "\n" +
-        "3. Lunges\n" +
-        "\n" +
-        "4. Plank\n" +
-        "\n" +
-        "5. Jumping Jacks",
-      index: 0,
-      logprobs: null,
-      finish_reason: "length",
-    },
-  ],
-  usage: { prompt_tokens: 16, completion_tokens: 256, total_tokens: 272 },
-};
+import { userDietsStore } from "$lib/stores/userDiets";
+import { edamamResponse, workoutResponse, openAIDietResponse, openAIResponse } from "$lib/utils";
 
 export const load: LayoutServerLoad = ({
   url: { pathname },
@@ -83,15 +16,18 @@ export const load: LayoutServerLoad = ({
 }) => {
   let userWorkoutData: any = get(userWorkoutDataStore);
   let userData: any = get(currentUserStore);
+  let userDiets: any = get(userDietsStore);
   if (!request.url.includes("invalidate") && pathname === "/dashboard") {
     userWorkoutData = loadUserWorkouts(cookies);
     userData = saveUserDataToStore(cookies);
+    userDiets = loadUserDiets();
   }
 
   return {
     pathname,
     userWorkoutData,
     userData,
+    userDiets,
   };
 };
 
@@ -118,10 +54,8 @@ async function loadUserWorkouts(cookies: Cookies) {
     .filter((val) => {
       return val.length !== 0;
     });
-  // console.log("Before requesting data: ", choices);
   for (var i = 0; i < choices.length; i++) {
     choices[i] = choices[i].slice(3);
-    // console.log("Workout name: ", choices[i])
     const workoutRequest = await axios.get(
       `https://api.api-ninjas.com/v1/exercises?name=${choices[i]}`,
       {
@@ -130,7 +64,6 @@ async function loadUserWorkouts(cookies: Cookies) {
         },
       }
     );
-    // console.log("Response data: ", workoutRequest.data);
     if (workoutRequest.data.length === 0) {
       choices.splice(i, 1);
       i -= 1;
@@ -148,11 +81,8 @@ async function loadUserWorkouts(cookies: Cookies) {
         id: workoutId,
       };
     }
-    // console.log("After processing: ", choices)
-    // console.log("var i = ", i)
     continue;
   }
-  // console.log("After requesting data: ", choices);
 
   return choices;
 }
@@ -163,15 +93,69 @@ async function saveUserDataToStore(cookies: Cookies) {
     return;
   }
   const storedUserData = await User.findOne({ userAuthToken: session });
-  // if (storedUserData) {
-  //   currentUserStore.set({
-  //     username: storedUserData.username,
-  //   })
-  // }
   if (storedUserData)
     return {
       username: storedUserData.username,
       height: storedUserData.height,
       weight: storedUserData.weight,
     };
+}
+
+async function loadUserDiets() {
+  const configuration = new Configuration({
+    apiKey: process.env.OPENAI_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
+  const response: any = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: `List five simple healthy home-made food items`,
+    temperature: 0.7,
+    max_tokens: 256,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+
+  let recipeNames: any = response.data.choices[0].text
+    .split(/\r?\n/)
+    .filter((val: string) => {
+      return val.length !== 0;
+    })
+    .map((val: string) => {
+      return val.slice(3);
+    });
+  for (var i = 0; i < recipeNames.length; i++) {
+    const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURI(
+      recipeNames[i]
+    )}&app_id=c77519ac&app_key=e113c75abf4611ff1a1689824704e1d0&random=true`;
+    const recipeRequest = await axios.get(url);
+    const recipeData =
+      recipeRequest.data.hits[
+        Math.floor(Math.random() * recipeRequest.data.hits.length)
+      ].recipe;
+    if (!recipeData) {
+      recipeNames.splice(i, 1);
+      i -= 1;
+    } else {
+      let recipeId = recipeData.label
+        .replaceAll(" ", "_")
+        .toLocaleLowerCase();
+      recipeId.replaceAll("/", "_");
+        
+      recipeNames[i] = {
+        id: recipeId,
+        name: recipeData.label,
+        thumbnail: recipeData.image,
+        ingredients: recipeData.ingredientLines,
+        cuisineType: recipeData.cuisineType,
+        steps: recipeData.url,
+        calories: recipeData.calories,
+        source: recipeData.source,
+        serves: recipeData.yield
+      }
+    }
+    continue;
+  }
+
+  return recipeNames
 }
