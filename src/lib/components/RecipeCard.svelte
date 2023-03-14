@@ -3,7 +3,11 @@
   import { goto } from "$app/navigation";
   import Fire from "carbon-icons-svelte/lib/Fire.svelte";
 
-  export let name: string, id: string, thumbnail: string, calories: number, serves: number;
+  export let name: string,
+    id: string,
+    thumbnail: string,
+    calories: number,
+    serves: number;
 </script>
 
 <Card

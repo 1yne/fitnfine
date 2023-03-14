@@ -15,13 +15,23 @@ export type UserStoreType = {
 };
 
 export type UserDietStoreType = {
-  id: string,
-  name: string,
-  thumbnail: string,
-  ingredients: string[],
-  cuisineType: string[],
-  steps: string,
-  calories: number,
-  source: string,
-  serves: number
-}
+  id: string;
+  name: string;
+  thumbnail: string;
+  ingredients: string[];
+  cuisineType: string[];
+  steps: string;
+  calories: number;
+  source: string;
+  serves: number;
+};
+
+export type WorkoutDataType = {
+  name: string;
+  type: string;
+  muscle: string;
+  equipment: string;
+  difficulty: string;
+  instructions: string;
+  id: string;
+};

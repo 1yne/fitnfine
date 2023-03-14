@@ -1,7 +1,7 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
-import { json } from '@sveltejs/kit';
+import { json } from "@sveltejs/kit";
 import { edamamResponse } from "$lib/utils";
 
 export const POST: RequestHandler = async () => {
@@ -40,11 +40,9 @@ export const POST: RequestHandler = async () => {
       recipeNames.splice(i, 1);
       i -= 1;
     } else {
-      let recipeId = recipeData.label
-        .replaceAll(" ", "_")
-        .toLocaleLowerCase();
+      let recipeId = recipeData.label.replaceAll(" ", "_").toLocaleLowerCase();
       recipeId.replaceAll("/", "_");
-        
+
       recipeNames[i] = {
         id: recipeId,
         name: recipeData.label,
@@ -54,8 +52,8 @@ export const POST: RequestHandler = async () => {
         steps: recipeData.url,
         calories: recipeData.calories,
         source: recipeData.source,
-        serves: recipeData.yield
-      }
+        serves: recipeData.yield,
+      };
     }
     continue;
   }

@@ -3,18 +3,14 @@
   import { SvelteUIProvider } from "@svelteuidev/core";
   import DashboardSideNavbar from "$lib/components/DashboardSideNavbar.svelte";
   import DashboardTopNavbar from "$lib/components/DashboardTopNavbar.svelte";
-  import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
   import { currentUserStore } from "$lib/stores/currentUser";
-  import { userDietsStore } from "$lib/stores/userDiets";
   import type { LayoutData } from "./$types";
   import PageTransition from "$lib/components/PageTransition.svelte";
 
   export let data: LayoutData;
 
   $: {
-    $userWorkoutDataStore = data.userWorkoutData;
     $currentUserStore = data.userData;
-    $userDietsStore = data.userDiets
   }
 </script>
 

@@ -2,9 +2,8 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import User from "$lib/schema/User";
-import { json } from '@sveltejs/kit';
+import { json } from "@sveltejs/kit";
 import { workoutResponse } from "$lib/utils";
-
 
 export const POST: RequestHandler = async ({ url, cookies }) => {
   const userData = await User.findOne({

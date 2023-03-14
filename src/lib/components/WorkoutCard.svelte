@@ -38,7 +38,6 @@
   }
 </script>
 
-
 <Card
   override={{ backgroundColor: "#353536", color: "white" }}
   class="hover:bg-cardBGHover transition-all cursor-pointer"

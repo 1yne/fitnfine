@@ -1,13 +1,4 @@
 import { writable } from "svelte/store";
-
-type WorkoutDataType = {
-  name: string;
-  type: string;
-  muscle: string;
-  equipment: string;
-  difficulty: string;
-  instructions: string;
-  id: string;
-};
+import type { WorkoutDataType } from "$lib/types";
 
 export const userWorkoutDataStore = writable<WorkoutDataType[]>([]);
