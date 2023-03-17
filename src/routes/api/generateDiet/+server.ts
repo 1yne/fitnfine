@@ -2,16 +2,23 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import { json } from "@sveltejs/kit";
-import { edamamResponse } from "$lib/utils";
+import { edamamResponse, openAIDietResponse } from "$lib/utils";
 
-export const POST: RequestHandler = async () => {
+export const POST: RequestHandler = async ({ request }) => {
+  const data = await request.json();
+  const filters = data.filters.map((val: any) => val.value);
+
+  const prompt = `List five simple healthy home-made ${
+    filters.length > 0 ? `${filters.join(" ")} ` : ""
+  }food items`;
+
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_KEY,
   });
   const openai = new OpenAIApi(configuration);
   const response: any = await openai.createCompletion({
     model: "text-davinci-003",
-    prompt: `List five simple healthy home-made food items`,
+    prompt,
     temperature: 0.7,
     max_tokens: 256,
     top_p: 1,
@@ -27,11 +34,18 @@ export const POST: RequestHandler = async () => {
     .map((val: string) => {
       return val.slice(3);
     });
+  
   for (var i = 0; i < recipeNames.length; i++) {
+    let encodedFiltersString = ""
+    filters.forEach((filter: string) => {
+      encodedFiltersString += `&health=${filter}`
+    })
+    console.log(encodedFiltersString)
     const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURI(
       recipeNames[i]
-    )}&app_id=c77519ac&app_key=e113c75abf4611ff1a1689824704e1d0&random=true`;
+    )}&app_id=c77519ac&app_key=e113c75abf4611ff1a1689824704e1d0&random=true${encodedFiltersString}`;
     const recipeRequest = await axios.get(url);
+
     const recipeData =
       recipeRequest.data.hits[
         Math.floor(Math.random() * recipeRequest.data.hits.length)
