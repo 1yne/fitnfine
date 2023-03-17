@@ -1,5 +1,5 @@
 <script>
-  import Logout from "carbon-icons-svelte/lib/Logout.svelte";
+  import Exit from "carbon-icons-svelte/lib/Exit.svelte";
   import { goto } from "$app/navigation";
   import Logo from "$lib/icons/Logo.svelte";
   import { fly } from "svelte/transition";
@@ -28,7 +28,7 @@
       class="w-full flex justify-center py-2 cursor-pointer"
       on:click={logout}
     >
-      <Logout
+      <Exit
         size={35}
         class="text-yellow hover:text-yellowHover transition-all"
       />

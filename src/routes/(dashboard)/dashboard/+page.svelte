@@ -15,7 +15,7 @@
   } from "@svelteuidev/core";
   import type { PageData } from "./$types";
   import type { UserDietStoreType, WorkoutDataType } from "$lib/types";
-  import { fade, fly } from 'svelte/transition';
+  import { fly } from "svelte/transition";
   export let data: PageData;
 
   import { onMount } from "svelte";
@@ -50,7 +50,7 @@
     ".svelteui-Modal-title": {
       fontSize: "1.3rem",
       fontFamily: "Nunito",
-      color: "white"
+      color: "white",
     },
     ".svelteui-Modal-close > svg": {
       size: "1.5rem",
@@ -78,10 +78,10 @@
   async function loadDietData(filters: FilterChipType[]) {
     const dietResponse = await fetch("/api/generateDiet", {
       method: "POST",
-      body: JSON.stringify({ filters })
+      body: JSON.stringify({ filters }),
     });
     let dietData = await dietResponse.json();
-    return dietData
+    return dietData;
   }
 
   onMount(async () => {
@@ -92,18 +92,16 @@
       let dietData: UserDietStoreType[] = $userDietStore,
         workoutData: WorkoutDataType[] = $userWorkoutDataStore;
 
-      dietData = await loadDietData([])
+      dietData = await loadDietData([]);
+      userDietStore.set(dietData);
       dietLoading = false;
 
       const workoutResponse = await fetch("/api/generateWorkouts", {
         method: "POST",
       });
       workoutData = await workoutResponse.json();
-      workoutLoading = false;
-
       userWorkoutDataStore.set(workoutData);
-      userDietStore.set(dietData);
-
+      workoutLoading = false;
     }
   });
 
@@ -117,11 +115,11 @@
   }
 
   async function saveFilters() {
-    modalLoading = true
-    const dietData = await loadDietData(chosenFilters)
-    userDietStore.set(dietData)
-    modalLoading = false
-    modalOpened = false
+    modalLoading = true;
+    const dietData = await loadDietData(chosenFilters);
+    userDietStore.set(dietData);
+    modalLoading = false;
+    modalOpened = false;
   }
 
   function changeFilters(filter: FilterChipType, type: string) {
@@ -158,7 +156,15 @@
         <Button
           size="xs"
           on:click={() => changeFilters(chosenFilter, "remove")}
-          class="bg-cardBG border-teal hover:bg-cardBGHover transition-all border-solid border rounded-full text-white font-nunito text-[1.1rem]"
+          override={{
+            backgroundColor: "#353536",
+            border: "#029987 1px solid",
+            borderRadius: "999px",
+            color: "white",
+            fontFamily: "Nunito",
+            fontSize: "1.1rem",
+          }}
+          class="hover:bg-cardBGHover transition-all"
         >
           <CheckMark slot="leftIcon" class="text-teal" />
           {chosenFilter.label}
@@ -168,7 +174,7 @@
   {:else}
     <p class="text-white">There aren't any filters added yet!</p>
   {/if}
-  <Divider class="!mt-3" />
+  <Divider override={{ mt: "0.75rem !important" }} />
   <h1 class="mb-1 text-lg text-white">Available filters:</h1>
   {#if availableFilters.length > 0}
     <div class="flex gap-2 flex-wrap">
@@ -176,7 +182,15 @@
         <Button
           size="xs"
           on:click={() => changeFilters(availableFilter, "add")}
-          class="bg-cardBG border-black hover:bg-cardBGHover transition-all border-solid border rounded-full text-white font-nunito text-[1.1rem]"
+          override={{
+            backgroundColor: "#353536",
+            border: "black 1px solid",
+            borderRadius: "999px",
+            color: "white",
+            fontFamily: "Nunito",
+            fontSize: "1.1rem",
+          }}
+          class="hover:bg-cardBGHover transition-all"
         >
           {availableFilter.label}
         </Button>
@@ -187,8 +201,18 @@
   {/if}
 
   <Group position="right">
-		<Button on:click={saveFilters} loading={modalLoading} class="font-nunito mt-2 text-[1.1rem] bg-yellow transition-all hover:bg-yellowHover">Save</Button>
-	</Group>
+    <Button
+      on:click={saveFilters}
+      loading={modalLoading}
+      override={{
+        fontFamily: "Nunito",
+        mt: "0.5rem",
+        fontSize: "1.1rem",
+        backgroundColor: "#e6b335",
+      }}
+      class="transition-all hover:bg-yellowHover">Save</Button
+    >
+  </Group>
 </Modal>
 
 <div class="p-5 text-white">
@@ -196,17 +220,19 @@
   <Divider />
   {#if !workoutLoading}
     <SimpleGrid cols={3}>
-      {#if $userWorkoutDataStore.length > 0}
+      {#if $userWorkoutDataStore.length > 0 && !workoutLoading}
         {#each $userWorkoutDataStore as userWorkout, i}
-          <div in:fly="{{ x: 50, duration: 750, delay: i * 75 }}">
-            <WorkoutCard
-              name={userWorkout.name}
-              difficulty={userWorkout.difficulty}
-              muscle={userWorkout.muscle}
-              type={userWorkout.type}
-              id={userWorkout.id}
-            />
-          </div>
+          {#if userWorkout.name}
+            <div in:fly={{ x: 50, duration: 750, delay: i * 75 }}>
+              <WorkoutCard
+                name={userWorkout.name}
+                difficulty={userWorkout.difficulty}
+                muscle={userWorkout.muscle}
+                type={userWorkout.type}
+                id={userWorkout.id}
+              />
+            </div>
+          {/if}
         {/each}
       {:else}
         <h1>There aren't any workouts for you! Please try again</h1>
@@ -230,18 +256,20 @@
     </div>
     <Divider />
     {#if !dietLoading}
-      <SimpleGrid spacing="xl" cols={4}>
-        {#if $userDietStore.length > 0}
+      <SimpleGrid cols={4}>
+        {#if $userDietStore.length > 0 && !dietLoading}
           {#each $userDietStore as userDiet, i}
-            <div in:fly="{{ x: 50, duration: 750, delay: i * 75 }}">
-              <RecipeCard
-                name={userDiet.name}
-                id={userDiet.id}
-                thumbnail={userDiet.thumbnail}
-                calories={userDiet.calories}
-                serves={userDiet.serves}
-              />
-            </div>
+            {#if userDiet.name}
+              <div in:fly={{ x: 50, duration: 750, delay: i * 75 }}>
+                <RecipeCard
+                  name={userDiet.name}
+                  id={userDiet.id}
+                  thumbnail={userDiet.thumbnail}
+                  calories={userDiet.calories}
+                  serves={userDiet.serves}
+                />
+              </div>
+            {/if}
           {/each}
         {:else}
           <h1>There aren't any recipes for you! Please try again</h1>

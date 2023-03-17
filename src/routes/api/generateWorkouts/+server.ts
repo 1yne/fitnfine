@@ -15,7 +15,7 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
   const openai = new OpenAIApi(configuration);
 
   const response = await openai.createCompletion({
-    model: "text-curie-001",
+    model: "text-davinci-003",
     prompt: `List five exercises that a person weighing ${userData.weight.toString()}kg and ${userData.height.toString()}cm tall can do at home`,
     temperature: 0.7,
     max_tokens: 256,

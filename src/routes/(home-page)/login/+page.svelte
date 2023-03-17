@@ -32,7 +32,7 @@
         {/if}
         <TextInput
           placeholder="Email"
-          class="w-full !font-nunito !mb-7"
+          class="!font-nunito"
           name="email"
           type="email"
           required={true}
@@ -45,6 +45,7 @@
               borderColor: "#1c1c1c !important",
               borderBottomColor: "#029987 !important",
               color: "white !important",
+              marginBottom: "1.75rem !important"
             },
           }}
           error={form?.invalid}
@@ -52,7 +53,7 @@
         />
         <TextInput
           placeholder="Password"
-          class="w-full !font-nunito !mb-7"
+          class="!font-nunito"
           name="password"
           required={true}
           type="password"
@@ -65,6 +66,7 @@
               borderColor: "#1c1c1c !important",
               borderBottomColor: "#029987 !important",
               color: "white !important",
+              marginBottom: "1.75rem !important"
             },
           }}
           error={form?.invalid}

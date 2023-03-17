@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ request }) => {
   });
   const openai = new OpenAIApi(configuration);
   const response: any = await openai.createCompletion({
-    model: "text-davinci-003",
+    model: "text-babbage-001",
     prompt,
     temperature: 0.7,
     max_tokens: 256,
@@ -34,40 +34,44 @@ export const POST: RequestHandler = async ({ request }) => {
     .map((val: string) => {
       return val.slice(3);
     });
-  
+
   for (var i = 0; i < recipeNames.length; i++) {
-    let encodedFiltersString = ""
+    let encodedFiltersString = "";
     filters.forEach((filter: string) => {
-      encodedFiltersString += `&health=${filter}`
-    })
-    console.log(encodedFiltersString)
+      encodedFiltersString += `&health=${filter}`;
+    });
     const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURI(
       recipeNames[i]
     )}&app_id=c77519ac&app_key=e113c75abf4611ff1a1689824704e1d0&random=true${encodedFiltersString}`;
+
     const recipeRequest = await axios.get(url);
 
-    const recipeData =
-      recipeRequest.data.hits[
-        Math.floor(Math.random() * recipeRequest.data.hits.length)
-      ].recipe;
-    if (!recipeData) {
-      recipeNames.splice(i, 1);
-      i -= 1;
-    } else {
-      let recipeId = recipeData.label.replaceAll(" ", "_").toLocaleLowerCase();
-      recipeId.replaceAll("/", "_");
+    if (recipeRequest.data.hits.length > 0) {
+      const recipeData =
+        recipeRequest.data.hits[
+          Math.floor(Math.random() * recipeRequest.data.hits.length)
+        ].recipe;
+      if (!recipeData) {
+        recipeNames.splice(i, 1);
+        i -= 1;
+      } else {
+        let recipeId = recipeData.label
+          .replaceAll(" ", "_")
+          .toLocaleLowerCase();
+        recipeId.replaceAll("/", "_");
 
-      recipeNames[i] = {
-        id: recipeId,
-        name: recipeData.label,
-        thumbnail: recipeData.image,
-        ingredients: recipeData.ingredientLines,
-        cuisineType: recipeData.cuisineType,
-        steps: recipeData.url,
-        calories: recipeData.calories,
-        source: recipeData.source,
-        serves: recipeData.yield,
-      };
+        recipeNames[i] = {
+          id: recipeId,
+          name: recipeData.label,
+          thumbnail: recipeData.image,
+          ingredients: recipeData.ingredientLines,
+          cuisineType: recipeData.cuisineType,
+          steps: recipeData.url,
+          calories: recipeData.calories,
+          source: recipeData.source,
+          serves: recipeData.yield,
+        };
+      }
     }
     continue;
   }

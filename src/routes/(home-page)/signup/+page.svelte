@@ -34,7 +34,7 @@
           placeholder="Username"
           name="username"
           required={true}
-          class="w-full !font-nunito"
+          class="!font-nunito"
           override={{
             input: {
               py: "1rem",
@@ -51,7 +51,7 @@
         />
         <TextInput
           placeholder="Email"
-          class="w-full !font-nunito"
+          class="!font-nunito"
           name="email"
           type="email"
           required={true}
@@ -71,7 +71,7 @@
         />
         <TextInput
           placeholder="Password"
-          class="w-full !font-nunito"
+          class="!font-nunito"
           name="password"
           required={true}
           type="password"
