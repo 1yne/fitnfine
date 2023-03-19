@@ -48,7 +48,7 @@
       <div class="bg-yellow rounded-lg p-2 w-16 flex justify-center">
         <svelte:component this={icon} size="25" fill="#029987" />
       </div>
-      <div class="text-right">
+      <div class="text-right mobile:hidden">
         <h1
           class={`${
             difficulty === "beginner"
@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="">
-      <h1 class="text-lg font-bold">{name}</h1>
+      <h1 class="text-xl font-black">{name}</h1>
       <h1>Exercises the {muscle}</h1>
     </div>
   </div>

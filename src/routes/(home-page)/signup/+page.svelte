@@ -2,6 +2,8 @@
   import { TextInput, Notification } from "@svelteuidev/core";
   import type { ActionData } from "./$types";
   export let form: ActionData;
+  import { browser } from "$app/environment";
+  let windowWidth = browser && window.innerWidth;
 
   const onChange = () => {
     if (form?.invalid) {
@@ -11,15 +13,19 @@
 </script>
 
 <svelte:head>
-  <title>Sign Up</title>
+  <title>Sign Up | FITnFINE</title>
 </svelte:head>
 
-<div class="h-[100vh] flex w-full">
-  <div class="w-8/12 overflow-hidden">
-    <img src="/SignUpImage.jpeg" alt="A fruit bowl" />
-  </div>
-  <div class="w-4/12">
-    <div class="h-full w-full flex flex-col justify-start p-14 gap-10">
+<svelte:window bind:innerWidth={windowWidth} />
+
+<div class={`h-[100vh] flex w-full ${windowWidth <= 650 ? "justify-center" : ""}`}>
+  {#if windowWidth > 650}
+    <div class="w-8/12 overflow-hidden">
+      <img src="/SignUpImage.jpeg" alt="A fruit bowl" class={`${windowWidth <= 900 ? "w-full h-full" : ""}`} />
+    </div>
+  {/if}
+  <div class="min-w-[2rem]">
+    <div class="h-full w-full flex flex-col justify-start items-center p-14 gap-10">
       <div class="font-nunito text-white">
         <h1 class="text-4xl font-black mb-3">Create an account</h1>
         <p>Let's get started on your transformation into your best self!</p>
@@ -34,12 +40,11 @@
           placeholder="Username"
           name="username"
           required={true}
-          class="!font-nunito"
+          class="!font-nunito w-full"
           override={{
             input: {
               py: "1rem",
               px: "1rem",
-              width: "100%",
               backgroundColor: "#1c1c1c !important",
               borderColor: "#1c1c1c !important",
               borderBottomColor: "#029987 !important",
@@ -51,7 +56,7 @@
         />
         <TextInput
           placeholder="Email"
-          class="!font-nunito"
+          class="!font-nunito w-full"
           name="email"
           type="email"
           required={true}
@@ -59,7 +64,6 @@
             input: {
               py: "1rem",
               px: "1rem",
-              width: "100%",
               backgroundColor: "#1c1c1c !important",
               borderColor: "#1c1c1c !important",
               borderBottomColor: "#029987 !important",
@@ -71,7 +75,7 @@
         />
         <TextInput
           placeholder="Password"
-          class="!font-nunito"
+          class="!font-nunito w-full"
           name="password"
           required={true}
           type="password"
@@ -79,7 +83,6 @@
             input: {
               py: "1rem",
               px: "1rem",
-              width: "100%",
               backgroundColor: "#1c1c1c !important",
               borderColor: "#1c1c1c !important",
               borderBottomColor: "#029987 !important",

@@ -16,6 +16,7 @@
   import type { PageData } from "./$types";
   import type { UserDietStoreType, WorkoutDataType } from "$lib/types";
   import { fly } from "svelte/transition";
+  import { browser } from "$app/environment";
   export let data: PageData;
 
   import { onMount } from "svelte";
@@ -71,6 +72,8 @@
     },
     ".svelteui-Modal-modal": {
       backgroundColor: "#1c1c1c !important",
+      width: "auto",
+      maxWidth: "440px"
     },
   }));
   $: ({ getStyles } = useStyles());
@@ -133,7 +136,11 @@
       availableFilters = availableFilters.concat(filter);
     }
   }
+
+  let windowWidth = browser && window.screen.width;
 </script>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <svelte:head>
   <title>Dashboard</title>
@@ -219,7 +226,7 @@
   <h1 class="text-xl font-extrabold mb-3">Recommended workouts:</h1>
   <Divider />
   {#if !workoutLoading}
-    <SimpleGrid cols={3}>
+    <SimpleGrid cols={windowWidth > 800 ? 3 : 2} class="transition-all">
       {#if $userWorkoutDataStore.length > 0 && !workoutLoading}
         {#each $userWorkoutDataStore as userWorkout, i}
           {#if userWorkout.name}
@@ -256,7 +263,7 @@
     </div>
     <Divider />
     {#if !dietLoading}
-      <SimpleGrid cols={4}>
+      <SimpleGrid cols={windowWidth > 680 ? 4 : windowWidth > 500 ? 3 : windowWidth > 350 ? 2 : 1} class="transition-all">
         {#if $userDietStore.length > 0 && !dietLoading}
           {#each $userDietStore as userDiet, i}
             {#if userDiet.name}
