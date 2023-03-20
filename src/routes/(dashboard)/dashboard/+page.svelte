@@ -171,7 +171,7 @@
             fontFamily: "Nunito",
             fontSize: "1.1rem",
           }}
-          class="hover:bg-cardBGHover transition-all"
+          class="hover:!bg-cardBGHover transition-all"
         >
           <CheckMark slot="leftIcon" class="text-teal" />
           {chosenFilter.label}
@@ -197,7 +197,7 @@
             fontFamily: "Nunito",
             fontSize: "1.1rem",
           }}
-          class="hover:bg-cardBGHover transition-all"
+          class="hover:!bg-cardBGHover transition-all"
         >
           {availableFilter.label}
         </Button>
@@ -217,7 +217,7 @@
         fontSize: "1.1rem",
         backgroundColor: "#e6b335",
       }}
-      class="transition-all hover:bg-yellowHover">Save</Button
+      class="transition-all hover:!bg-yellowHover">Save</Button
     >
   </Group>
 </Modal>
