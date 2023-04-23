@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { currentUserStore } from "$lib/stores/currentUser";
   import { getGreeting } from "$lib/utils";
   import { page } from "$app/stores";
@@ -9,7 +9,7 @@
   import { browser } from "$app/environment";
   import { Menu, createStyles } from "@svelteuidev/core";
 
-  let windowWidth = browser && window.screen.width;
+  let windowWidth: any = browser && window.screen.width;
 
   const useStyles = createStyles(() => ({
     " > button": {

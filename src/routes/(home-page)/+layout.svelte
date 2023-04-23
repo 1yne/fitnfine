@@ -10,12 +10,11 @@
   $: if ($navigating) {
     if ($navigating.to?.route.id?.includes("dashboard")) {
       if (!document.cookie || !parseCookie(document.cookie).session) {
-        goto("/login");
+        goto("/signup");
       }
     }
     if ($navigating.from?.route.id === "/(home-page)") {
       if (
-        $navigating.to?.route.id?.includes("login") ||
         $navigating.to?.route.id?.includes("signup")
       ) {
         if (!document.cookie) {

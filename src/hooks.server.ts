@@ -28,7 +28,7 @@ async function verifyUserIsLoggedIn({ event, resolve }) {
   const session = event.cookies.get("session")
   if (event.url.pathname.includes("dashboard")) {
     if (!session) {
-      throw redirect(303, "/login");
+      throw redirect(303, "/signup");
     } else {
       const userData = await User.findOne({ userAuthToken: session })
       if (!userData) {
@@ -36,12 +36,11 @@ async function verifyUserIsLoggedIn({ event, resolve }) {
           path: "/",
           expires: new Date(0),
         })
-        throw redirect(303, "/login")
+        throw redirect(303, "/signup")
       }
     }
   }
   if (
-    event.url.pathname.includes("login") ||
     event.url.pathname.includes("signup")
   ) {
     if (event.cookies.get("session")) {
