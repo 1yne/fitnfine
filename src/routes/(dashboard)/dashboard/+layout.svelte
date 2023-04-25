@@ -13,8 +13,11 @@
   $: {
     $currentUserStore = data.userData;
   }
+  let windowWidth: number
 
-  let windowWidth = browser && window.screen.width;
+  if (browser) {
+    windowWidth = window.screen.width;
+  }
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />

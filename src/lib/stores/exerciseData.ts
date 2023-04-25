@@ -1,4 +1,4 @@
 import { writable } from "svelte/store";
 import type { ExerciseDataType } from "$lib/types";
 
-export const userWorkoutDataStore = writable<ExerciseDataType[]>([]);
+export const exerciseDataStore = writable<ExerciseDataType[]>([]);

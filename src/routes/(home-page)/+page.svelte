@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
   import { Animation } from "@svelteuidev/motion";
   import Plant2 from "$lib/icons/Plant2.svelte";
   import HeroSectionBg1 from "$lib/icons/HeroSectionBG1.svelte";
   import { browser } from "$app/environment";
-  let windowWidth = browser && window.innerWidth;
+  let windowWidth: number
+  if (browser ) {
+    windowWidth = window.innerWidth;
+  }
 </script>
 
 <svelte:head>

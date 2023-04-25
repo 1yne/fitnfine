@@ -4,6 +4,7 @@
   import CheckMark from "carbon-icons-svelte/lib/CheckmarkFilled.svelte";
   import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
   import { userDietStore } from "$lib/stores/userDietStore";
+  import { exerciseDataStore } from "$lib/stores/exerciseData";
   import {
     SimpleGrid,
     Loader,
@@ -12,19 +13,24 @@
     Modal,
     createStyles,
     Button,
+    Badge,
+    Card,
   } from "@svelteuidev/core";
   import type { PageData } from "./$types";
-  import type { UserDietStoreType, WorkoutDataType } from "$lib/types";
+  import type { UserDietStoreType, ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
   import { browser } from "$app/environment";
   export let data: PageData;
 
   import { onMount } from "svelte";
+  import { capitalizeFirstLetter } from "$lib/utils";
 
   let dietLoading = true,
     workoutLoading = true,
     modalOpened = false,
-    modalLoading = false;
+    modalLoading = false,
+    workoutModalLoading = false,
+    activeWorkout: ExerciseDataType | null;
 
   let availableFilters = [
     {
@@ -47,7 +53,7 @@
 
   let chosenFilters: FilterChipType[] = [];
 
-  const useStyles = createStyles(() => ({
+  const dietFilterStyles = createStyles(() => ({
     ".svelteui-Modal-title": {
       fontSize: "1.3rem",
       fontFamily: "Nunito",
@@ -73,10 +79,32 @@
     ".svelteui-Modal-modal": {
       backgroundColor: "#1c1c1c !important",
       width: "auto",
-      maxWidth: "440px"
+      maxWidth: "440px",
     },
   }));
-  $: ({ getStyles } = useStyles());
+  $: ({ getStyles: getDietFilterStyles } = dietFilterStyles());
+
+  const workoutModalStyles = createStyles(() => ({
+    ".svelteui-Modal-modal": {
+      backgroundColor: "#1c1c1c !important",
+      // width: "100% !important",
+      // maxWidth: "60rem",
+      // marginRight: "auto !important",
+      // marginLeft: "auto !important",
+      // marginTop: "auto !important",
+      // marginBottom: "auto !important",
+    },
+    // ".svelteui-Modal-inner > div": {
+    //   width: "100%",
+    //   display: "block !important",
+    //   marginTop: "auto !important",
+    //   marginBottom: "auto !important",
+    // },
+    // ".svelteui-Modal-inner": {
+    //   display: "block !important",
+    // },
+  }));
+  $: ({ getStyles: getWorkoutModalStyles } = workoutModalStyles());
 
   async function loadDietData(filters: FilterChipType[]) {
     const dietResponse = await fetch("/api/generateDiet", {
@@ -93,7 +121,7 @@
       workoutLoading = false;
     } else {
       let dietData: UserDietStoreType[] = $userDietStore,
-        workoutData: WorkoutDataType[] = $userWorkoutDataStore;
+        workoutData: ExerciseDataType[] = $userWorkoutDataStore;
 
       dietData = await loadDietData([]);
       userDietStore.set(dietData);
@@ -102,8 +130,15 @@
       const workoutResponse = await fetch("/api/generateWorkouts", {
         method: "POST",
       });
-      workoutData = await workoutResponse.json();
+
+      const data = await workoutResponse.json();
+      workoutData = data.workoutData;
+
+      const exerciseData = data.exerciseData;
+
       userWorkoutDataStore.set(workoutData);
+      exerciseDataStore.set(exerciseData);
+
       workoutLoading = false;
     }
   });
@@ -137,7 +172,11 @@
     }
   }
 
-  let windowWidth = browser && window.screen.width;
+  let windowWidth: number;
+
+  if (browser) {
+    windowWidth = window.screen.width;
+  }
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -154,7 +193,7 @@
   overlayColor="#264653"
   overlayOpacity={0.55}
   overlayBlur={3}
-  class={`${getStyles()} font-nunito`}
+  class={`${getDietFilterStyles()} font-nunito`}
 >
   <h1 class="mb-1 text-lg text-white">Added filters:</h1>
   {#if chosenFilters.length > 0}
@@ -222,23 +261,67 @@
   </Group>
 </Modal>
 
+<Modal
+  opened={workoutModalLoading}
+  on:close={() => {
+    activeWorkout = null;
+    workoutModalLoading = false;
+  }}
+  class={`${getWorkoutModalStyles()} font-nunito`}
+  centered
+  overlayColor="#264653"
+  overlayOpacity={0.55}
+  overlayBlur={3}
+  withCloseButton={false}
+  size="full"
+>
+  {#if activeWorkout}
+    <div class="flex h-full gap-8 justify-between items-center">
+      <div class="text-white w-full">
+        <div class="flex w-full gap-4">
+          <h1 class="text-4xl">{activeWorkout.name}</h1>
+          <div class="flex items-center">
+            <Badge>{activeWorkout.bodyPart}</Badge>
+          </div>
+        </div>
+        <Card override={{ backgroundColor: "#353536", color: "white", width: "100%", mt: "0.75rem" }}>
+          <h1 class="text-xl">Exercises the {activeWorkout.target}</h1>
+          <h1 class="text-lg">
+            Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
+          </h1>
+        </Card>
+      </div>
+      <div>
+        <img
+          src={activeWorkout.gifUrl}
+          alt={activeWorkout.name}
+          class="rounded-lg mb-3"
+        />
+      </div>
+    </div>
+  {/if}
+</Modal>
+
 <div class="p-5 text-white">
   <h1 class="text-xl font-extrabold mb-3">Recommended workouts:</h1>
   <Divider />
   {#if !workoutLoading}
-    <SimpleGrid cols={windowWidth > 800 ? 3 : 2} class="transition-all">
+    <SimpleGrid
+      cols={windowWidth > 800 ? 3 : windowWidth > 500 ? 2 : 1}
+      class="transition-all"
+    >
       {#if $userWorkoutDataStore.length > 0 && !workoutLoading}
         {#each $userWorkoutDataStore as userWorkout, i}
           {#if userWorkout.name}
-            <div in:fly={{ x: 50, duration: 750, delay: i * 75 }}>
-              <WorkoutCard
-                name={userWorkout.name}
-                difficulty={userWorkout.difficulty}
-                muscle={userWorkout.muscle}
-                type={userWorkout.type}
-                id={userWorkout.id}
-              />
-            </div>
+            <button
+              in:fly={{ x: 50, duration: 750, delay: i * 75 }}
+              on:click={() => {
+                activeWorkout = userWorkout;
+                workoutModalLoading = true;
+              }}
+            >
+              <WorkoutCard {...userWorkout} />
+            </button>
           {/if}
         {/each}
       {:else}
@@ -263,7 +346,16 @@
     </div>
     <Divider />
     {#if !dietLoading}
-      <SimpleGrid cols={windowWidth > 680 ? 4 : windowWidth > 500 ? 3 : windowWidth > 350 ? 2 : 1} class="transition-all">
+      <SimpleGrid
+        cols={windowWidth > 680
+          ? 4
+          : windowWidth > 500
+          ? 3
+          : windowWidth > 350
+          ? 2
+          : 1}
+        class="transition-all"
+      >
         {#if $userDietStore.length > 0 && !dietLoading}
           {#each $userDietStore as userDiet, i}
             {#if userDiet.name}

@@ -35,3 +35,12 @@ export type WorkoutDataType = {
   instructions: string;
   id: string;
 };
+
+export type ExerciseDataType = {
+  bodyPart: string,
+  equipment: string,
+  gifUrl: string,
+  id: string,
+  name: string,
+  target: string
+}
