@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import User from "$lib/schema/User";
 import { json } from "@sveltejs/kit";
-import { workoutResponse, chatGPTResponse, exerciseDBData, openAIResponse, capitalizeFirstLetter } from "$lib/utils";
+import { workoutResponse, chatGPTResponse, openAIResponse, capitalizeFirstLetter } from "$lib/utils";
 import { allExercises } from "$lib/exerciseData.ts"
 import fs from "fs";
 
@@ -16,17 +16,17 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
   });
   const openai = new OpenAIApi(configuration);
 
-  const options = {
-    method: 'GET',
-    url: 'https://exercisedb.p.rapidapi.com/exercises',
-    headers: {
-      'content-type': 'application/octet-stream',
-      'X-RapidAPI-Key': process.env.WORKOUT_API_KEY,
-      'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-    }
-  };
+  // const options = {
+  //   method: 'GET',
+  //   url: 'https://exercisedb.p.rapidapi.com/exercises',
+  //   headers: {
+  //     'content-type': 'application/octet-stream',
+  //     'X-RapidAPI-Key': process.env.WORKOUT_API_KEY,
+  //     'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+  //   }
+  // };
 
-  const exerciseDB = await axios.request(options)
+  // const exerciseDB = await axios.request(options)
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
@@ -62,7 +62,7 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
   }
 
   return json({
-    exerciseData: exerciseDBData,
+    exerciseData: allExercises,
     workoutData: workouts
   });
 };

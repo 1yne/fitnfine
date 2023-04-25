@@ -3,7 +3,7 @@
   import type { ActionData } from "./$types";
   export let form: ActionData;
   import { browser } from "$app/environment";
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
 
   let windowWidth: any = browser && window.innerWidth;
 
@@ -14,6 +14,11 @@
   };
 
   let currentSlide = "signup";
+  $: if (form) {
+    if (form.signup === false) {
+      currentSlide = "login"
+    }
+  }
 </script>
 
 <svelte:head>
@@ -46,7 +51,7 @@
             <h1 class="text-4xl font-black mb-3">Create an account</h1>
             <p>Let's get started on your transformation into your best self!</p>
           </div>
-          <form method="POST" class="flex items-start flex-col gap-7 w-full">
+          <form method="POST" class="flex items-start flex-col gap-7 w-full" action="?/signup">
             {#if form?.invalid}
               <Notification color="red" withCloseButton={false} class="w-full">
                 {form.error}
@@ -170,7 +175,7 @@
             <h1 class="text-4xl font-black mb-3">Login</h1>
             <p>Welcome back to your transformation!</p>
           </div>
-          <form method="POST" class="flex items-start flex-col w-full">
+          <form method="POST" class="flex items-start flex-col w-full" action="?/login">
             {#if form?.invalid}
               <Notification
                 color="red"

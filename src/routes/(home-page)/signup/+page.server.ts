@@ -4,7 +4,7 @@ import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { dev } from "$app/environment";
 
 export const actions: Actions = {
-  default: async ({ request, cookies }) => {
+  signup: async ({ request, cookies }) => {
     const formData = await request.formData();
     const username = formData.get("username");
     const password = formData.get("password");
@@ -15,7 +15,11 @@ export const actions: Actions = {
 
     const data = await User.findOne({ username });
     if (data)
-      return fail(303, { invalid: true, error: "This user already exists!" });
+      return fail(303, { 
+        invalid: true, 
+        error: "This user already exists!", 
+        signup: true 
+      });
     if (
       typeof username !== "string" ||
       typeof password !== "string" ||
@@ -24,7 +28,8 @@ export const actions: Actions = {
     ) {
       return fail(303, {
         invalid: true,
-        error: "Username or password is invalid",
+        error: "Username or password is invalid", 
+        signup: true
       });
     }
 
@@ -50,4 +55,58 @@ export const actions: Actions = {
 
     throw redirect(303, "/dashboard");
   },
+  login: async ({ request, cookies }) => {
+    const formData = await request.formData();
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    if (
+      typeof email !== "string" ||
+      typeof password !== "string" ||
+      !email ||
+      !password
+    ) {
+      return fail(303, {
+        invalid: true,
+        error: "Email or password is invalid",
+        signup: false
+      });
+    }
+
+    const data = await User.findOne({ email, password });
+    if (!data)
+      return fail(303, {
+        invalid: true,
+        error: "Email or password is incorrect",
+        signup: false
+      });
+
+    const passwordCorrect = bcrypt.compareSync(password, data.passwordHash);
+    if (!passwordCorrect)
+      return fail(303, {
+        invalid: true,
+        error: "Email or password is incorrect",
+        signup: false
+      });
+
+    const newUserAuthToken = crypto.randomUUID();
+    User.findOneAndUpdate(
+      { email },
+      {
+        userAuthToken: newUserAuthToken,
+      },
+      {
+        upsert: true,
+      }
+    ).then(() => {});
+
+    cookies.set("session", newUserAuthToken, {
+      path: "/",
+      httpOnly: false,
+      sameSite: "strict",
+      secure: !dev,
+      maxAge: 60 * 60 * 24 * 30,
+    });
+    throw redirect(303, "/dashboard");
+  }
 };
