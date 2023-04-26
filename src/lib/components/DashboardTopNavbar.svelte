@@ -6,14 +6,7 @@
   import { fly } from "svelte/transition";
   import { goto } from "$app/navigation";
   import Logo from "$lib/icons/Logo.svelte";
-  import { browser } from "$app/environment";
   import { Menu, createStyles } from "@svelteuidev/core";
-
-  let windowWidth: number;
-
-  if (browser) {
-    windowWidth = window.screen.width;
-  }
 
   const useStyles = createStyles(() => ({
     " > button": {
@@ -41,8 +34,6 @@
   }));
   $: ({ getStyles } = useStyles());
 </script>
-
-<svelte:window bind:innerWidth={windowWidth} />
 
 <div
   class="w-full flex items-center justify-between px-5 desktop:py-5 test h-16 mobile:bg-darkGreen desktop:bg-background text-white"

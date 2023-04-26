@@ -6,6 +6,10 @@
   import Transition from "$lib/components/PageTransition.svelte";
   import type { PageData } from "./$types";
   import { parseCookie } from "$lib/utils";
+  import { dev } from "$app/environment";
+  import { inject } from "@vercel/analytics";
+
+  inject({ mode: dev ? "development" : "production" });
 
   $: if ($navigating) {
     if ($navigating.to?.route.id?.includes("dashboard")) {

@@ -6,22 +6,18 @@
   import { currentUserStore } from "$lib/stores/currentUser";
   import type { LayoutData } from "./$types";
   import PageTransition from "$lib/components/PageTransition.svelte";
-  import { browser } from "$app/environment";
-  import "$lib/mediaQueries.css"
+  import "$lib/mediaQueries.css";
+  import { dev } from "$app/environment";
+  import { inject } from "@vercel/analytics";
+
+  inject({ mode: dev ? "development" : "production" });
 
   export let data: LayoutData;
 
   $: {
     $currentUserStore = data.userData;
   }
-  let windowWidth: number;
-
-  if (browser) {
-    windowWidth = window.screen.width;
-  }
 </script>
-
-<svelte:window bind:innerWidth={windowWidth} />
 
 <SvelteUIProvider override={{ height: "100%", backgroundColor: "#1c1c1c" }}>
   <div class="content h-full">

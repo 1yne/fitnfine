@@ -930,6 +930,11 @@
     "@types/node" "*"
     "@types/webidl-conversions" "*"
 
+"@vercel/analytics@^1.0.0":
+  "integrity" "sha512-RQmj7pv82JwGDHrnKeRc6TtSw2U7rWNubc2IH0ernTzWTj02yr9zvIYiYJeztsBzrJtWv7m8Nz6vxxb+cdEtJw=="
+  "resolved" "https://registry.npmjs.org/@vercel/analytics/-/analytics-1.0.0.tgz"
+  "version" "1.0.0"
+
 "@vercel/nft@^0.22.1":
   "integrity" "sha512-gTsFnnT4mGxodr4AUlW3/urY+8JKKB452LwF3m477RFUJTAaDmcz2JqFuInzvdybYIeyIv1sSONEJxsxnbQ5JQ=="
   "resolved" "https://registry.npmjs.org/@vercel/nft/-/nft-0.22.6.tgz"
