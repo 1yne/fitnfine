@@ -7,13 +7,14 @@
   import type { LayoutData } from "./$types";
   import PageTransition from "$lib/components/PageTransition.svelte";
   import { browser } from "$app/environment";
+  import "$lib/mediaQueries.css"
 
   export let data: LayoutData;
 
   $: {
     $currentUserStore = data.userData;
   }
-  let windowWidth: number
+  let windowWidth: number;
 
   if (browser) {
     windowWidth = window.screen.width;
@@ -25,9 +26,9 @@
 <SvelteUIProvider override={{ height: "100%", backgroundColor: "#1c1c1c" }}>
   <div class="content h-full">
     <div class="flex h-full">
-      {#if windowWidth > 800}
+      <div class="side_navbar">
         <DashboardSideNavbar />
-      {/if}
+      </div>
       <div class="w-full desktop:ml-16">
         <DashboardTopNavbar />
         <PageTransition refresh={data.pathname}>

@@ -1,0 +1,23 @@
+@media (max-width: 800px) {
+  .side_navbar {
+    display: none;
+  }
+  .greeting {
+    display: none;
+  }
+  .logo {
+    display: block;
+  }
+  .back-arrow {
+    display: block;
+  }
+}
+
+@media (min-width: 800px) {
+  .logo {
+    display: none;
+  }
+  .back-arrow {
+    display: none;
+  }
+}

@@ -302,8 +302,8 @@
   {/if}
 </Modal>
 
-<div class="p-5 text-white">
-  <h1 class="text-xl font-extrabold mb-3">Recommended workouts:</h1>
+<div class="p-5 pt-0 text-white">
+  <h1 class="text-xl font-extrabold my-3">Recommended workouts:</h1>
   <Divider />
   {#if !workoutLoading}
     <SimpleGrid
