@@ -2,7 +2,7 @@ import type { RequestHandler } from "@sveltejs/kit";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import { json } from "@sveltejs/kit";
-import { edamamResponse, openAIDietResponse } from "$lib/utils";
+import { storedEdamamResponse, storedOpenAIDietResponse } from "$lib/utils";
 
 export const POST: RequestHandler = async ({ request }) => {
   const data = await request.json();
@@ -26,7 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
     presence_penalty: 0,
   });
 
-  let recipeNames: any = response.data.choices[0].text
+  let recipeChoices: string[] = response.data.choices[0].text
     .split(/\r?\n/)
     .filter((val: string) => {
       return val.length !== 0;
@@ -35,14 +35,16 @@ export const POST: RequestHandler = async ({ request }) => {
       return val.slice(3);
     });
 
-  for (var i = 0; i < recipeNames.length; i++) {
+  let recipes = []
+
+  for (var i = 0; i < recipeChoices.length; i++) {
     let encodedFiltersString = "";
     filters.forEach((filter: string) => {
       encodedFiltersString += `&health=${filter}`;
     });
     const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${encodeURI(
-      recipeNames[i]
-    )}&app_id=c77519ac&app_key=e113c75abf4611ff1a1689824704e1d0&random=true${encodedFiltersString}`;
+      recipeChoices[i]
+    )}&app_id=c77519ac&app_key=${process.env.RECIPE_KEY}&random=true${encodedFiltersString}`;
 
     const recipeRequest = await axios.get(url);
 
@@ -51,30 +53,28 @@ export const POST: RequestHandler = async ({ request }) => {
         recipeRequest.data.hits[
           Math.floor(Math.random() * recipeRequest.data.hits.length)
         ].recipe;
-      if (!recipeData) {
-        recipeNames.splice(i, 1);
-        i -= 1;
-      } else {
-        let recipeId = recipeData.label
-          .replaceAll(" ", "_")
-          .toLocaleLowerCase();
-        recipeId.replaceAll("/", "_");
 
-        recipeNames[i] = {
-          id: recipeId,
-          name: recipeData.label,
-          thumbnail: recipeData.image,
-          ingredients: recipeData.ingredientLines,
-          cuisineType: recipeData.cuisineType,
-          steps: recipeData.url,
-          calories: recipeData.calories,
-          source: recipeData.source,
-          serves: recipeData.yield,
-        };
+      let recipeId = recipeData.label
+        .replaceAll(" ", "_")
+        .toLocaleLowerCase();
+      recipeId.replaceAll("/", "_");
+
+      const recipeObj = {
+        id: recipeId,
+        name: recipeData.label,
+        thumbnail: recipeData.image,
+        ingredients: recipeData.ingredientLines,
+        cuisineType: recipeData.cuisineType,
+        steps: recipeData.url,
+        calories: recipeData.calories,
+        source: recipeData.source,
+        serves: recipeData.yield,
       }
+
+      recipes.push(recipeObj)
     }
     continue;
   }
 
-  return json(recipeNames);
+  return json(recipes);
 };

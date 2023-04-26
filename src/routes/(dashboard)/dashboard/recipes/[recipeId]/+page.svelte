@@ -9,7 +9,12 @@
   const dietData = $userDietStore.filter(
     (val) => val.id === $page.params.recipeId
   )[0];
-  let windowWidth = browser && window.screen.width;
+
+  let windowWidth: number
+
+  if (browser) {
+    windowWidth = window.screen.width;
+  }
 </script>
 
 <svelte:head>
@@ -80,7 +85,7 @@
           href={dietData.steps}
           target="_blank"
           rel="noreferrer"
-          class={`transition-all hover:text-teal mt-2 break-words`}>{dietData.steps}</a
+          class={`transition-all text-teal hover:text-tealHover mt-2 break-words`}>{dietData.steps}</a
         >
       </div>
     </Card>

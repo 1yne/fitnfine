@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import User from "$lib/schema/User";
 import { json } from "@sveltejs/kit";
-import { workoutResponse, chatGPTResponse, openAIResponse, capitalizeFirstLetter } from "$lib/utils";
+import { storedWorkouts, storedOpenAIWorkoutResponse, capitalizeFirstLetter } from "$lib/utils";
 import { allExercises } from "$lib/exerciseData.ts"
 import fs from "fs";
 
@@ -38,7 +38,7 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
     presence_penalty: 0,
   });
 
-  let choices: any = response.data.choices[0].text
+  let workoutChoices: string[] = response.data.choices[0].text
     ?.split(/\r?\n/)
     .filter((val) => {
       return val.length !== 0;
@@ -46,8 +46,8 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
   
   let workouts = []
 
-  for (var i = 0; i < choices.length; i++) {
-    let matches = allExercises.filter((val) => val.name.includes(choices[i].toLocaleLowerCase().replaceAll("-", " ")));
+  for (var i = 0; i < workoutChoices.length; i++) {
+    let matches = allExercises.filter((val) => val.name.includes(workoutChoices[i].toLocaleLowerCase().replaceAll("-", " ")));
     if (matches.length > 5) {
       const shuffled = matches.sort(() => 0.5 - Math.random());
       matches = shuffled.slice(0, 5);
@@ -60,6 +60,8 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
       })
     });
   }
+
+  workouts = workouts.slice(0, 5)
 
   return json({
     exerciseData: allExercises,
