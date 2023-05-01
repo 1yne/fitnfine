@@ -53,6 +53,6 @@ async function verifyUserIsLoggedIn({ event, resolve }) {
 
 export const handle: Handle = sequence(
   prepareStylesSSR,
+  connectToDB,
   verifyUserIsLoggedIn,
-  connectToDB
 );

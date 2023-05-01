@@ -41,6 +41,7 @@ export const actions: Actions = {
       userAuthToken: crypto.randomUUID(),
       weight,
       height,
+      likedWorkouts: []
     };
 
     await new User(object).save();

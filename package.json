@@ -34,7 +34,6 @@
 		"carbon-icons-svelte": "^11.4.0",
 		"dotenv": "^16.0.3",
 		"mongoose": "^6.9.2",
-		"openai": "^3.2.1",
-		"svelte-local-storage-store": "^0.4.0"
+		"openai": "^3.2.1"
 	}
 }

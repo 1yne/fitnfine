@@ -20,6 +20,7 @@
   import type { UserDietStoreType, ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
   import { browser } from "$app/environment";
+  import FavoriteFilled from "carbon-icons-svelte/lib/FavoriteFilled.svelte";
   export let data: PageData;
 
   import { onMount } from "svelte";
@@ -87,22 +88,7 @@
   const workoutModalStyles = createStyles(() => ({
     ".svelteui-Modal-modal": {
       backgroundColor: "#1c1c1c !important",
-      // width: "100% !important",
-      // maxWidth: "60rem",
-      // marginRight: "auto !important",
-      // marginLeft: "auto !important",
-      // marginTop: "auto !important",
-      // marginBottom: "auto !important",
     },
-    // ".svelteui-Modal-inner > div": {
-    //   width: "100%",
-    //   display: "block !important",
-    //   marginTop: "auto !important",
-    //   marginBottom: "auto !important",
-    // },
-    // ".svelteui-Modal-inner": {
-    //   display: "block !important",
-    // },
   }));
   $: ({ getStyles: getWorkoutModalStyles } = workoutModalStyles());
 
@@ -173,9 +159,48 @@
   }
 
   let windowWidth: number;
-
+  let noOfLikes = 0,
+    userLikedWorkout = false;
+  
   if (browser) {
     windowWidth = window.screen.width;
+  }
+
+  async function loadWorkoutData(workout: ExerciseDataType) {
+    const workoutResponse = await fetch("/api/getWorkoutData", {
+      method: "POST",
+      body: JSON.stringify({ id: workout.id }),
+    });
+    let fetchedData = await workoutResponse.json();
+    noOfLikes = fetchedData.workoutData.likes;
+    userLikedWorkout = fetchedData.workoutData.likedUsers.includes(fetchedData.userData._id)
+  }
+
+  async function updateLikes(workout: ExerciseDataType) {
+    let data: ExerciseDataType;
+    if (!userLikedWorkout) {
+      const response = await fetch("/api/updateWorkoutLikes", {
+        method: "POST",
+        body: JSON.stringify({
+          addLikes: true,
+          id: workout.id,
+          likes: noOfLikes,
+        }),
+      });
+      data = await response.json();
+    } else {
+      const response = await fetch("/api/updateWorkoutLikes", {
+        method: "POST",
+        body: JSON.stringify({
+          addLikes: false,
+          id: workout.id,
+          likes: noOfLikes,
+        }),
+      });
+      data = await response.json();
+    }
+    noOfLikes = data.likes;
+    userLikedWorkout = !userLikedWorkout
   }
 </script>
 
@@ -278,13 +303,29 @@
   {#if activeWorkout}
     <div class="flex h-full gap-8 justify-between items-center">
       <div class="text-white w-full">
-        <div class="flex w-full gap-4">
-          <h1 class="text-4xl">{activeWorkout.name}</h1>
-          <div class="flex items-center">
-            <Badge>{activeWorkout.bodyPart}</Badge>
+        <Card
+          override={{
+            backgroundColor: "#353536",
+            color: "white",
+            width: "100%",
+            mt: "0.75rem",
+          }}
+        >
+          <div class="flex w-full gap-4">
+            <h1 class="text-4xl">{activeWorkout.name}</h1>
+            <div class="flex items-center">
+              <Badge>{activeWorkout.bodyPart}</Badge>
+            </div>
           </div>
-        </div>
-        <Card override={{ backgroundColor: "#353536", color: "white", width: "100%", mt: "0.75rem" }}>
+        </Card>
+        <Card
+          override={{
+            backgroundColor: "rgba(53, 53, 54, 0.5)",
+            color: "white",
+            width: "100%",
+            my: "0.75rem",
+          }}
+        >
           <h1 class="text-xl">Exercises the {activeWorkout.target}</h1>
           <h1 class="text-lg">
             Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
@@ -297,6 +338,22 @@
           alt={activeWorkout.name}
           class="rounded-lg mb-3"
         />
+        <div class="flex justify-end">
+          <button
+            class="flex gap-4 text-white bg-cardBG hover:bg-cardBGHover transition-all py-2 px-4 rounded-lg"
+            on:click={() => {
+              if (activeWorkout) {
+                updateLikes(activeWorkout);
+              }
+            }}
+          >
+            <FavoriteFilled
+              size={24}
+              class={`transition-all ${userLikedWorkout ? "fill-red-500" : "fill-gray-500"}`}
+            />
+            {noOfLikes}
+          </button>
+        </div>
       </div>
     </div>
   {/if}
@@ -318,6 +375,7 @@
               on:click={() => {
                 activeWorkout = userWorkout;
                 workoutModalLoading = true;
+                loadWorkoutData(userWorkout);
               }}
             >
               <WorkoutCard {...userWorkout} />

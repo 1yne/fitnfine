@@ -25,6 +25,7 @@ const UserSchema = new Schema({
   email: reqString,
   weight: reqNum,
   height: reqNum,
+  likedWorkouts: reqArray
 });
 
 const name = "Users";
