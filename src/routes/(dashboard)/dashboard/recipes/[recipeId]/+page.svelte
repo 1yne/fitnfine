@@ -10,7 +10,7 @@
     (val) => val.id === $page.params.recipeId
   )[0];
 
-  let windowWidth: number
+  let windowWidth: number;
 
   if (browser) {
     windowWidth = window.screen.width;
@@ -31,7 +31,9 @@
     >
       <div class="backdrop-blur-md h-full flex items-end">
         <div class="flex flex-col mt-auto text-darkGreen z-20 px-5 mb-5">
-          <h1 class="text-[250%] leading-10 font-black mb-2">{dietData.name}</h1>
+          <h1 class="text-[250%] leading-10 font-black mb-2">
+            {dietData.name}
+          </h1>
           <div class="flex gap-2 text-white flex-wrap">
             <div class="flex">
               <a
@@ -47,7 +49,9 @@
               <Divider orientation="vertical" />
             </div>
             <div class="flex">
-              <p class="mr-2">Cuisine: {capitalizeFirstLetter(dietData.cuisineType[0])}</p>
+              <p class="mr-2">
+                Cuisine: {capitalizeFirstLetter(dietData.cuisineType[0])}
+              </p>
               <Divider orientation="vertical" />
             </div>
             <div class="flex gap-1">
@@ -69,7 +73,9 @@
         padding: "1.25rem",
         display: "flex",
       }}
-      class={`drop-shadow-lg hover:bg-cardBGHover transition-all ${windowWidth <= 465 ? "flex flex-col gap-5" : "flex gap-4"}`}
+      class={`drop-shadow-lg hover:bg-cardBGHover transition-all ${
+        windowWidth <= 465 ? "flex flex-col gap-5" : "flex gap-4"
+      }`}
     >
       <div class={`${windowWidth > 465 ? "w-4/6" : "w-full"}`}>
         <h1 class="text-2xl">Ingredients:</h1>
@@ -85,7 +91,8 @@
           href={dietData.steps}
           target="_blank"
           rel="noreferrer"
-          class={`transition-all text-teal hover:text-tealHover mt-2 break-words`}>{dietData.steps}</a
+          class={`transition-all text-teal hover:text-tealHover mt-2 break-words`}
+          >{dietData.steps}</a
         >
       </div>
     </Card>

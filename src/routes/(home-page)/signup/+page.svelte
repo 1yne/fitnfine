@@ -16,7 +16,7 @@
   let currentSlide = "signup";
   $: if (form) {
     if (form.signup === false) {
-      currentSlide = "login"
+      currentSlide = "login";
     }
   }
 </script>
@@ -28,7 +28,9 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <div
-  class={`h-[100vh] flex w-full overflow-hidden ${windowWidth <= 850 ? "justify-center" : ""}`}
+  class={`h-[100vh] flex w-full overflow-hidden ${
+    windowWidth <= 850 ? "justify-center" : ""
+  }`}
 >
   {#if windowWidth > 850}
     <div class="w-8/12 overflow-hidden">
@@ -51,7 +53,11 @@
             <h1 class="text-4xl font-black mb-3">Create an account</h1>
             <p>Let's get started on your transformation into your best self!</p>
           </div>
-          <form method="POST" class="flex items-start flex-col gap-7 w-full" action="?/signup">
+          <form
+            method="POST"
+            class="flex items-start flex-col gap-7 w-full"
+            action="?/signup"
+          >
             {#if form?.invalid}
               <Notification color="red" withCloseButton={false} class="w-full">
                 {form.error}
@@ -160,7 +166,8 @@
             <p class="text-white">
               Already created an account? <button
                 on:click={() => (currentSlide = "login")}
-                class="text-yellow transition-all hover:text-yellowHover">Login</button
+                class="text-yellow transition-all hover:text-yellowHover"
+                >Login</button
               >
             </p>
           </div>
@@ -175,7 +182,11 @@
             <h1 class="text-4xl font-black mb-3">Login</h1>
             <p>Welcome back to your transformation!</p>
           </div>
-          <form method="POST" class="flex items-start flex-col w-full" action="?/login">
+          <form
+            method="POST"
+            class="flex items-start flex-col w-full"
+            action="?/login"
+          >
             {#if form?.invalid}
               <Notification
                 color="red"
@@ -234,7 +245,8 @@
             <p class="text-white">
               Haven't yet created an account? <button
                 on:click={() => (currentSlide = "signup")}
-                class="text-yellow transition-all hover:text-yellowHover">Sign up</button
+                class="text-yellow transition-all hover:text-yellowHover"
+                >Sign up</button
               >
             </p>
           </div>

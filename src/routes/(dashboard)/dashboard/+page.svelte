@@ -161,7 +161,7 @@
   let windowWidth: number;
   let noOfLikes = 0,
     userLikedWorkout = false;
-  
+
   if (browser) {
     windowWidth = window.screen.width;
   }
@@ -173,7 +173,9 @@
     });
     let fetchedData = await workoutResponse.json();
     noOfLikes = fetchedData.workoutData.likes;
-    userLikedWorkout = fetchedData.workoutData.likedUsers.includes(fetchedData.userData._id)
+    userLikedWorkout = fetchedData.workoutData.likedUsers.includes(
+      fetchedData.userData._id
+    );
   }
 
   async function updateLikes(workout: ExerciseDataType) {
@@ -200,7 +202,7 @@
       data = await response.json();
     }
     noOfLikes = data.likes;
-    userLikedWorkout = !userLikedWorkout
+    userLikedWorkout = !userLikedWorkout;
   }
 </script>
 
@@ -301,14 +303,22 @@
   size="full"
 >
   {#if activeWorkout}
-    <div class="flex h-full gap-8 justify-between items-center">
-      <div class="text-white w-full">
+    <div
+      class="flex h-full gap-8 workoutModalDesktop:justify-between workoutModalMobile:flex-col items-start"
+    >
+      <div class="h-full">
+        <img
+          src={activeWorkout.gifUrl}
+          alt={activeWorkout.name}
+          class="rounded-lg"
+        />
+      </div>
+      <div class="text-white w-full text-left">
         <Card
           override={{
             backgroundColor: "#353536",
             color: "white",
             width: "100%",
-            mt: "0.75rem",
           }}
         >
           <div class="flex w-full gap-4">
@@ -331,14 +341,9 @@
             Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
           </h1>
         </Card>
-      </div>
-      <div>
-        <img
-          src={activeWorkout.gifUrl}
-          alt={activeWorkout.name}
-          class="rounded-lg mb-3"
-        />
-        <div class="flex justify-end">
+        <div
+          class="flex workoutModalMobile:justify-start workoutModalDesktop:justify-end"
+        >
           <button
             class="flex gap-4 text-white bg-cardBG hover:bg-cardBGHover transition-all py-2 px-4 rounded-lg"
             on:click={() => {
@@ -349,7 +354,9 @@
           >
             <FavoriteFilled
               size={24}
-              class={`transition-all ${userLikedWorkout ? "fill-red-500" : "fill-gray-500"}`}
+              class={`transition-all ${
+                userLikedWorkout ? "fill-teal" : "fill-gray-500"
+              }`}
             />
             {noOfLikes}
           </button>

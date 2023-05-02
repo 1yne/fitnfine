@@ -25,7 +25,7 @@ const WorkoutSchema = new Schema({
   name: reqString,
   target: reqString,
   likes: reqNum,
-  likedUsers: reqArr
+  likedUsers: reqArr,
 });
 
 const name = "Workouts";

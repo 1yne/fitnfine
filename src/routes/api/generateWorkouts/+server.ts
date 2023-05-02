@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
     return json({
       exerciseData: allExercises,
       workoutData: storedWorkouts,
-    })
+    });
   } else {
     const userData = await User.findOne({
       userAuthToken: cookies.get("session"),

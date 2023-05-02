@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
   const session = cookies.get("session");
   const data = await request.json();
 
-  const workoutData = await Workouts.findOne({ _id: data.id });
+  const workoutData = await Workouts.findById(data.id);
   const userData = await User.findOne({ userAuthToken: session });
 
   return json({ workoutData, userData });

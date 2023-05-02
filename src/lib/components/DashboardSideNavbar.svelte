@@ -3,6 +3,8 @@
   import { goto } from "$app/navigation";
   import Logo from "$lib/icons/Logo.svelte";
   import { fly } from "svelte/transition";
+  import { currentUserStore } from "$lib/stores/currentUser";
+  import LogoGithub from "carbon-icons-svelte/lib/LogoGithub.svelte";
 
   async function logout() {
     goto("/");
@@ -23,15 +25,37 @@
     </div>
   </div>
   <div>
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      class="w-full flex justify-center py-2 cursor-pointer"
-      on:click={logout}
+      class="w-full flex items-center py-2 px-2 cursor-pointer gap-6 flex-col"
     >
-      <Exit
-        size={35}
-        class="text-yellow hover:text-yellowHover transition-all"
-      />
+      <div class="px-1">
+        <a href="/dashboard/profile"
+          ><img
+            src={$currentUserStore.profilePicture || "/defaultPic.jpeg"}
+            alt="profile"
+            class="rounded-full flex"
+          /></a
+        >
+      </div>
+      <div>
+        <a
+          href="https://github.com/Caladan08/fitnfine"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <LogoGithub
+            size={40}
+            class="fill-white hover:fill-teal transition-all"
+          />
+        </a>
+      </div>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div on:click={logout}>
+        <Exit
+          size={35}
+          class="text-yellow hover:text-yellowHover transition-all"
+        />
+      </div>
     </div>
   </div>
 </form>

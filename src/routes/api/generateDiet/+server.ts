@@ -7,7 +7,7 @@ import { dev } from "$app/environment";
 
 export const POST: RequestHandler = async ({ request }) => {
   if (dev) {
-    return json(storedEdamamResponse)
+    return json(storedEdamamResponse);
   } else {
     const data = await request.json();
     const filters = data.filters.map((val: any) => val.value);

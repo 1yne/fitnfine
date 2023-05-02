@@ -18,11 +18,19 @@ module.exports = {
       },
     },
     screens: {
-      "desktop": "801px",
-      "mobile": {
-        'max': "800px"
-      }
-    }
+      desktop: "801px",
+      mobile: {
+        max: "800px",
+      },
+      profileMobile: {
+        max: "569px",
+      },
+      profileDesktop: "570px",
+      workoutModalMobile: {
+        max: "519px",
+      },
+      workoutModalDesktop: "520px",
+    },
   },
   plugins: [],
 };

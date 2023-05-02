@@ -15,10 +15,10 @@ export const actions: Actions = {
 
     const data = await User.findOne({ username });
     if (data)
-      return fail(303, { 
-        invalid: true, 
-        error: "This user already exists!", 
-        signup: true 
+      return fail(303, {
+        invalid: true,
+        error: "This user already exists!",
+        signup: true,
       });
     if (
       typeof username !== "string" ||
@@ -28,8 +28,8 @@ export const actions: Actions = {
     ) {
       return fail(303, {
         invalid: true,
-        error: "Username or password is invalid", 
-        signup: true
+        error: "Username or password is invalid",
+        signup: true,
       });
     }
 
@@ -41,7 +41,7 @@ export const actions: Actions = {
       userAuthToken: crypto.randomUUID(),
       weight,
       height,
-      likedWorkouts: []
+      likedWorkouts: [],
     };
 
     await new User(object).save();
@@ -70,7 +70,7 @@ export const actions: Actions = {
       return fail(303, {
         invalid: true,
         error: "Email or password is invalid",
-        signup: false
+        signup: false,
       });
     }
 
@@ -79,7 +79,7 @@ export const actions: Actions = {
       return fail(303, {
         invalid: true,
         error: "Email or password is incorrect",
-        signup: false
+        signup: false,
       });
 
     const passwordCorrect = bcrypt.compareSync(password, data.passwordHash);
@@ -87,7 +87,7 @@ export const actions: Actions = {
       return fail(303, {
         invalid: true,
         error: "Email or password is incorrect",
-        signup: false
+        signup: false,
       });
 
     const newUserAuthToken = crypto.randomUUID();
@@ -102,12 +102,9 @@ export const actions: Actions = {
     ).then(() => {});
 
     cookies.set("session", newUserAuthToken, {
-      path: "/",
-      httpOnly: false,
       sameSite: "strict",
-      secure: !dev,
-      maxAge: 60 * 60 * 24 * 30,
+      maxAge: 60 * 60 * 24 * 7,
     });
     throw redirect(303, "/dashboard");
-  }
+  },
 };

@@ -2,6 +2,7 @@ export type UserStoreType = {
   username: string;
   weight: number;
   height: number;
+  profilePicture: string | undefined;
 };
 
 export type UserDietStoreType = {
@@ -17,12 +18,12 @@ export type UserDietStoreType = {
 };
 
 export type ExerciseDataType = {
-  bodyPart: string,
-  equipment: string,
-  gifUrl: string,
-  id: string,
-  name: string,
-  target: string,
-  likes: number,
-  likedUsers: string[]
-}
+  bodyPart: string;
+  equipment: string;
+  gifUrl: string;
+  id: string;
+  name: string;
+  target: string;
+  likes: number;
+  likedUsers: string[];
+};

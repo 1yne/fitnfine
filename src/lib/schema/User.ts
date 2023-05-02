@@ -17,6 +17,10 @@ const reqArray = {
   required: true,
 };
 
+const str = {
+  type: String,
+};
+
 const UserSchema = new Schema({
   _id: reqString,
   username: reqString,
@@ -25,7 +29,8 @@ const UserSchema = new Schema({
   email: reqString,
   weight: reqNum,
   height: reqNum,
-  likedWorkouts: reqArray
+  likedWorkouts: reqArray,
+  profilePicture: str,
 });
 
 const name = "Users";

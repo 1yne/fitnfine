@@ -872,23 +872,23 @@
     "svelte-hmr" "^0.15.1"
     "vitefu" "^0.2.3"
 
-"@svelteuidev/composables@^0.9.0":
-  "integrity" "sha512-wtdVCByxIwrKgjrD/zkPM6YrDOZstFFL5Rdf+zOFc9i4mTPiCicAcy4SNVUQNTI1YqW93Rg6i3I0FJuO/UIu8A=="
-  "resolved" "https://registry.npmjs.org/@svelteuidev/composables/-/composables-0.9.0.tgz"
-  "version" "0.9.0"
+"@svelteuidev/composables@^0.11.1":
+  "integrity" "sha512-TTRGTDlrJD22KT/X8L2he5hu3rDorzzB591sgzDjtCi35vKF6Z/ijuc/ngNCFHA+2WxcDGBGPs7YewEgv2yEKg=="
+  "resolved" "https://registry.npmjs.org/@svelteuidev/composables/-/composables-0.11.1.tgz"
+  "version" "0.11.1"
 
-"@svelteuidev/core@^0.9.0":
-  "integrity" "sha512-BVFYz42b9cJiFkd7glWHPaav4ee8DjX2cEDZ0nMHjXCwqUIRjfFqwPo9AXfA3NXO8CGIrpFimCDYTrFJWvt8bw=="
-  "resolved" "https://registry.npmjs.org/@svelteuidev/core/-/core-0.9.0.tgz"
-  "version" "0.9.0"
+"@svelteuidev/core@^0.11.1":
+  "integrity" "sha512-Dy16B6OaoSgMPyWL+WvrJwFB529N6Gmr4S4qdUWmE3LrJwhm9rNtwoEQn167dhOlmTQhfgJDot+DuIRRwtGXrw=="
+  "resolved" "https://registry.npmjs.org/@svelteuidev/core/-/core-0.11.1.tgz"
+  "version" "0.11.1"
   dependencies:
     "@floating-ui/dom" "0.5.2"
     "@stitches/core" "1.2.8"
 
-"@svelteuidev/motion@^0.9.0":
-  "integrity" "sha512-HAIalYKUck1CendEEyrqTXfofjbknoBWtap76xuDnPKfMGZ+ADYG8VCBBV19jZF2NjGk5ad6SkvLcAAyBCi5sg=="
-  "resolved" "https://registry.npmjs.org/@svelteuidev/motion/-/motion-0.9.0.tgz"
-  "version" "0.9.0"
+"@svelteuidev/motion@^0.11.1":
+  "integrity" "sha512-XyN/s43w9Y8JPmogy2iDbdzVsaawQYgM9amBbywGaKeSkcbeJ1Wwdh6LpeLJ2/oXYJ0iymQNSM+VxK5ICA9lyg=="
+  "resolved" "https://registry.npmjs.org/@svelteuidev/motion/-/motion-0.11.1.tgz"
+  "version" "0.11.1"
 
 "@types/bcryptjs@^2.4.2":
   "integrity" "sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ=="

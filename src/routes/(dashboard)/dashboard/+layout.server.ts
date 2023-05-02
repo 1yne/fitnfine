@@ -10,7 +10,10 @@ export const load: LayoutServerLoad = ({
   request,
 }) => {
   let userData: any = get(currentUserStore);
-  if (!request.url.includes("invalidate") && pathname === "/dashboard") {
+  if (
+    (!request.url.includes("invalidate") && pathname === "/dashboard") ||
+    pathname === "/dashboard/profile"
+  ) {
     userData = saveUserDataToStore(cookies);
   }
 
@@ -31,5 +34,6 @@ async function saveUserDataToStore(cookies: Cookies) {
       username: storedUserData.username,
       height: storedUserData.height,
       weight: storedUserData.weight,
+      profilePicture: storedUserData.profilePicture,
     };
 }

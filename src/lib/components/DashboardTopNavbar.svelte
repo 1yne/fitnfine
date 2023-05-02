@@ -7,6 +7,7 @@
   import { goto } from "$app/navigation";
   import Logo from "$lib/icons/Logo.svelte";
   import { Menu, createStyles } from "@svelteuidev/core";
+  import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
 
   const useStyles = createStyles(() => ({
     " > button": {
@@ -75,6 +76,9 @@
   </div>
   <div class="back-arrow">
     <Menu class={`${getStyles()} font-nunito transition-all rounded-lg`}>
+      <a href="/dashboard/profile"
+        ><Menu.Item icon={UserAvatarFilledAlt}>Profile</Menu.Item></a
+      >
       <Menu.Item icon={ArrowLeft} color="red">Logout</Menu.Item>
     </Menu>
   </div>
