@@ -63,29 +63,18 @@
       </div>
     </div>
   </div>
-  <div class="px-5 mt-5">
+  <div class={`px-5 mt-5 flex gap-8 w-full ${windowWidth < 700 ? "flex-col" : ""}`}>
     <Card
       override={{
         backgroundColor: "#353536",
         color: "white",
         borderRadius: "0.5rem",
-        marginTop: "2.5rem",
         padding: "1.25rem",
         display: "flex",
       }}
-      class={`drop-shadow-lg hover:bg-cardBGHover transition-all ${
-        windowWidth <= 465 ? "flex flex-col gap-5" : "flex gap-4"
-      }`}
+      class={`drop-shadow-lg hover:bg-cardBGHover ${windowWidth > 700 ? "w-4/6" : "w-full"} transition-all`}
     >
-      <div class={`${windowWidth > 465 ? "w-4/6" : "w-full"}`}>
-        <h1 class="text-2xl">Ingredients:</h1>
-        <ul class={`${windowWidth > 465 ? "mx-2" : "mx-0"} mt-3`}>
-          {#each dietData.ingredients as ingredient, i}
-            <li class="text-md">{ingredient}</li>
-          {/each}
-        </ul>
-      </div>
-      <div class={`${windowWidth > 465 ? "w-2/6" : "w-full"}`}>
+      <div class="w-full">
         <h1 class="text-2xl mb-2">Steps:</h1>
         <a
           href={dietData.steps}
@@ -94,6 +83,25 @@
           class={`transition-all text-teal hover:text-tealHover mt-2 break-words`}
           >{dietData.steps}</a
         >
+      </div>
+    </Card>
+    <Card
+      override={{
+        backgroundColor: "#353536",
+        color: "white",
+        borderRadius: "0.5rem",
+        padding: "1.25rem",
+        display: "flex",
+      }}
+      class={`drop-shadow-lg hover:bg-cardBGHover ${windowWidth > 700 ? "w-2/6" : "w-full"} transition-all flex`}
+    >
+      <div class={`w-full`}>
+        <h1 class="text-2xl">Ingredients:</h1>
+        <ul class={`${windowWidth > 465 ? "mx-2" : "mx-0"} mt-3`}>
+          {#each dietData.ingredients as ingredient, i}
+            <li class="text-md">{ingredient}</li>
+          {/each}
+        </ul>
       </div>
     </Card>
   </div>
