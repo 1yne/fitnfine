@@ -1,7 +1,5 @@
 <script lang="ts">
   import { Animation } from "@svelteuidev/motion";
-  import Plant2 from "$lib/icons/Plant2.svelte";
-  import HeroSectionBg1 from "$lib/icons/HeroSectionBG1.svelte";
   import { browser } from "$app/environment";
   let windowWidth: number;
   if (browser) {
@@ -20,10 +18,12 @@
 
 <svelte:window bind:innerWidth={windowWidth} />
 
-<div class="h-[100vh] flex overflow-hidden">
+<div
+  class="h-[100vh] flex overflow-hidden bg-[url('/heroSection.svg')] bg-cover justify-between gap-6"
+>
   <div
     class={`${
-      windowWidth > 720 ? "w-1/2" : "w-full text-center"
+      windowWidth > 720 ? "w-7/12" : "w-full text-center"
     } flex-col flex items-center`}
   >
     <div class="w-3/4 py-5">
@@ -38,7 +38,7 @@
     >
       <h1
         class={`text-orange font-righteous ${
-          windowWidth > 420 ? "text-7xl" : "text-5xl"
+          windowWidth > 420 ? "text-8xl" : "text-6xl"
         }`}
       >
         Time to get serious!
@@ -48,23 +48,21 @@
           windowWidth > 420 ? "text-xl" : "text-lg"
         }`}
       >
-        Elevate your at-home wellness routine with personalized workout and
-        recipes, designed by our AI to help you reach your full potential.
+        Whether you're looking to lose weight, build muscle, or simply improve
+        your overall health, FITnFINE has a variety of workouts and recipes to
+        suit your needs.
       </p>
       <a
-        class="font-nunito bg-teal text-white text-center py-4 w-36 rounded-lg text-lg transition-all hover:bg-tealHover"
+        class="font-nunito bg-yellow text-white text-center py-4 w-36 rounded-lg text-lg transition-all hover:bg-yellowHover"
         href="/signup">Get Started</a
       >
     </div>
-    <div class="mt-10">
-      <Plant2 />
-    </div>
   </div>
   {#if windowWidth > 720}
-    <div class="w-1/2 flex justify-center flex-col">
+    <div class="w-7/12 flex justify-center flex-col">
       <Animation duration={8} animation="float">
         <div class="flex justify-center mx-5">
-          <HeroSectionBg1 width="600" height="2400" />
+          <img src="/heroSectionImage.svg" alt="" class="w-[650px]" />
         </div>
       </Animation>
     </div>
