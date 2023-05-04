@@ -33,7 +33,7 @@
           ><img
             src={$currentUserStore.profilePicture || "/defaultPic.jpeg"}
             alt="profile"
-            class="rounded-full flex"
+            class="rounded-full flex w-16 h-10"
           /></a
         >
       </div>
@@ -45,7 +45,7 @@
         >
           <LogoGithub
             size={40}
-            class="fill-white hover:fill-teal transition-all"
+            class="fill-white hover:fill-gray-300 transition-all"
           />
         </a>
       </div>

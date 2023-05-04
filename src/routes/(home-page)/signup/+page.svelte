@@ -5,8 +5,6 @@
   import { browser } from "$app/environment";
   import { fly } from "svelte/transition";
 
-  let windowWidth: any = browser && window.innerWidth;
-
   const onChange = () => {
     if (form?.invalid) {
       form.invalid = false;
@@ -25,23 +23,15 @@
   <title>{currentSlide === "signup" ? "Signup" : "Login"} | FITnFINE</title>
 </svelte:head>
 
-<svelte:window bind:innerWidth={windowWidth} />
-
-<div
-  class={`h-[100vh] flex w-full overflow-hidden ${
-    windowWidth <= 850 ? "justify-center" : ""
-  }`}
->
-  {#if windowWidth > 850}
-    <div class="w-8/12 overflow-hidden">
-      <img
-        src="/SignUpImage.jpeg"
-        alt="A fruit bowl"
-        class={`${windowWidth <= 1000 ? "w-full h-full" : ""}`}
-      />
-    </div>
-  {/if}
-  <div class="min-w-[33rem]">
+<div class="h-[100vh] flex w-full overflow-hidden wrapper">
+  <div class="w-8/12 overflow-hidden imageWrapper">
+    <img
+      src="/SignUpImage.jpeg"
+      alt="A fruit bowl"
+      class="image"
+    />
+  </div>
+  <div class="w-[33rem]">
     <div class="h-full w-full">
       {#if currentSlide === "signup"}
         <div
