@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Animation } from "@svelteuidev/motion";
+  import Logo from "$lib/icons/Logo.svelte";
 </script>
 
 <svelte:head>
@@ -17,12 +18,12 @@
   <div class="contentWrapper flex-col flex items-center">
     <div class="w-3/4 py-5">
       <a class="cursor-pointer text-4xl text-yellow font-righteous" href="/"
-        >FITnFINE</a
+        ><Logo size="48" /></a
       >
     </div>
     <div class="w-3/4 flex flex-col textWrapper mt-16">
       <h1 class="text-orange font-righteous heading">Time to get serious!</h1>
-      <p class="text-white mt-7 mb-10 font-nunito font-bold description">
+      <p class="text-white mt-7 mb-10 font-nunito description">
         Whether you're looking to lose weight, build muscle, or simply improve
         your overall health, FITnFINE has a variety of workouts and recipes to
         suit your needs.
