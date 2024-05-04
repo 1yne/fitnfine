@@ -13,6 +13,7 @@ module.exports = {
         orange: "#e35936",
         orangeHover: "#c74e30",
         background: "#1c1c1c",
+        darkBG: "#121212",
         cardBG: "#353536",
         cardBGHover: "#494a4a",
       },
