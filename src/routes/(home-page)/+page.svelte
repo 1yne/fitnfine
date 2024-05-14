@@ -34,8 +34,8 @@
         >
       </div>
     </div>
-    <div class="w-1/2 flex justify-center flex-col p-12">
-    <img src="/heroSectionImage.png" alt="" class="w-[34rem]">
+    <div class=" flex justify-center flex-col p-12">
+      <img src="/heroSectionImage.png" alt="" class="w-[44rem]">
     </div>
   </div>
 </div>
