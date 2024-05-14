@@ -29,7 +29,7 @@
           suit your needs.
         </p>
         <a
-          class="font-nunito bg-yellow text-black text-center py-4 w-36 rounded-lg text-lg transition-all hover:bg-yellowHover"
+          class="font-righteous signup bg-yellow uppercase text-white text-center py-4 rounded-lg w-48 transition-all"
           href="/signup">Get Started</a
         >
       </div>
@@ -39,3 +39,12 @@
     </div>
   </div>
 </div>
+
+<style>
+  .signup {
+    box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.2), 0 6px 50px 0 rgba(255, 255, 255, 0.4);
+  }
+  .signup:hover {
+    box-shadow: 0 8px 16px 0 rgba(255, 255, 255, 0.25), 0 6px 50px 0 rgba(255, 255, 255, 0.5);
+  }
+</style>
