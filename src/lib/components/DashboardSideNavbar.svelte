@@ -49,13 +49,12 @@
           />
         </a>
       </div>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div on:click={logout}>
+      <button on:click={logout}>
         <Exit
           size={35}
           class="text-yellow hover:text-yellowHover transition-all"
         />
-      </div>
+      </button>
     </div>
   </div>
 </form>

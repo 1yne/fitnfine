@@ -63,15 +63,14 @@
         </a>
       </div>
     {:else}
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div
+      <button
         on:click={() => goto("/dashboard")}
         in:fly|global={{ y: 50, duration: 500, delay: 700 }}
         out:fly|global={{ y: 50, duration: 500 }}
         class="cursor-pointer"
       >
         <ArrowLeft size={30} />
-      </div>
+      </button>
     {/if}
   </div>
   <div class="back-arrow">
