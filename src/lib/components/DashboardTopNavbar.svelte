@@ -45,8 +45,8 @@
       <div class="greeting">
         <h1
           class="font-nunito text-3xl font-extrabold"
-          in:fly={{ y: -50, duration: 500, delay: 700 }}
-          out:fly={{ y: -50, duration: 500 }}
+          in:fly|global={{ y: -50, duration: 500, delay: 700 }}
+          out:fly|global={{ y: -50, duration: 500 }}
         >
           {getGreeting()}
           {$currentUserStore.username ? $currentUserStore.username : "user"}!
@@ -56,8 +56,8 @@
         <a
           href="/"
           class="flex"
-          in:fly={{ y: -50, duration: 500, delay: 700 }}
-          out:fly={{ y: -50, duration: 500 }}
+          in:fly|global={{ y: -50, duration: 500, delay: 700 }}
+          out:fly|global={{ y: -50, duration: 500 }}
         >
           <Logo size={45} />
         </a>
@@ -66,8 +66,8 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         on:click={() => goto("/dashboard")}
-        in:fly={{ y: 50, duration: 500, delay: 700 }}
-        out:fly={{ y: 50, duration: 500 }}
+        in:fly|global={{ y: 50, duration: 500, delay: 700 }}
+        out:fly|global={{ y: 50, duration: 500 }}
         class="cursor-pointer"
       >
         <ArrowLeft size={30} />

@@ -14,8 +14,8 @@
 
 <form
   class="bg-darkGreen h-[100vh] w-16 py-3 flex items-center justify-between gap-5 flex-col fixed"
-  in:fly={{ x: -50, duration: 1050 }}
-  out:fly={{ x: -50, duration: 300 }}
+  in:fly|global={{ x: -50, duration: 1050 }}
+  out:fly|global={{ x: -50, duration: 300 }}
 >
   <div>
     <div class="w-full py-2 cursor-pointer">

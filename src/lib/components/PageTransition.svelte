@@ -5,8 +5,8 @@
 
 {#key refresh}
   <div
-    in:fly={{ x: -5, duration: 400, delay: 400 }}
-    out:fly={{ x: 5, duration: 400 }}
+    in:fly|global={{ x: -5, duration: 400, delay: 400 }}
+    out:fly|global={{ x: 5, duration: 400 }}
   >
     <slot />
   </div>

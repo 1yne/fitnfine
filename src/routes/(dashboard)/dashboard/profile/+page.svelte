@@ -164,7 +164,7 @@
           {#each data.workouts as userWorkout, i}
             {#if userWorkout.name}
               <button
-                in:fly={{ x: 50, duration: 750, delay: i * 75 }}
+                in:fly|global={{ x: 50, duration: 750, delay: i * 75 }}
                 on:click={() => {
                   activeWorkout = userWorkout;
                   workoutModalLoading = true;

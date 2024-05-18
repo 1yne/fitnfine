@@ -378,7 +378,7 @@
         {#each $userWorkoutDataStore as userWorkout, i}
           {#if userWorkout.name}
             <button
-              in:fly={{ x: 50, duration: 750, delay: i * 75 }}
+              in:fly|global={{ x: 50, duration: 750, delay: i * 75 }}
               on:click={() => {
                 activeWorkout = userWorkout;
                 workoutModalLoading = true;
@@ -424,7 +424,7 @@
         {#if $userDietStore.length > 0 && !dietLoading}
           {#each $userDietStore as userDiet, i}
             {#if userDiet.name}
-              <div in:fly={{ x: 50, duration: 750, delay: i * 75 }}>
+              <div in:fly|global={{ x: 50, duration: 750, delay: i * 75 }}>
                 <RecipeCard
                   name={userDiet.name}
                   id={userDiet.id}

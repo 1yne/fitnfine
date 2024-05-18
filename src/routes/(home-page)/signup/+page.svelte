@@ -36,8 +36,8 @@
       {#if currentSlide === "signup"}
         <div
           class="signup w-full h-full flex flex-col justify-start items-center p-14 gap-10"
-          in:fly={{ x: -50, duration: 500, delay: 700 }}
-          out:fly={{ x: -50, duration: 500 }}
+          in:fly|global={{ x: -50, duration: 500, delay: 700 }}
+          out:fly|global={{ x: -50, duration: 500 }}
         >
           <div class="font-nunito text-white">
             <h1 class="text-4xl font-black mb-3">Create an account</h1>
@@ -164,8 +164,8 @@
         </div>
       {:else}
         <div
-          in:fly={{ x: 50, duration: 500, delay: 700 }}
-          out:fly={{ x: 50, duration: 500 }}
+          in:fly|global={{ x: 50, duration: 500, delay: 700 }}
+          out:fly|global={{ x: 50, duration: 500 }}
           class="login h-full w-full flex flex-col justify-start items-start p-14 gap-10"
         >
           <div class="font-nunito text-white">
