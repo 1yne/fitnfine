@@ -54,7 +54,7 @@ export const actions: Actions = {
       maxAge: 60 * 60 * 24 * 30,
     });
 
-    throw redirect(303, "/dashboard");
+    redirect(303, "/dashboard");
   },
   login: async ({ request, cookies }) => {
     const formData = await request.formData();
@@ -101,10 +101,10 @@ export const actions: Actions = {
       }
     ).then(() => {});
 
-    cookies.set("session", newUserAuthToken, {
-      sameSite: "strict",
-      maxAge: 60 * 60 * 24 * 7,
-    });
-    throw redirect(303, "/dashboard");
+    /* @migration task: add path argument */ cookies.set("session", newUserAuthToken, {
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24 * 7,
+          });
+    redirect(303, "/dashboard");
   },
 };
