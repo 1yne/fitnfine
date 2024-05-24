@@ -31,7 +31,8 @@
     modalOpened = false,
     modalLoading = false,
     workoutModalLoading = false,
-    activeWorkout: ExerciseDataType | null;
+    activeWorkout: ExerciseDataType | null,
+    imageError = false;
 
   let availableFilters = [
     {
@@ -306,13 +307,16 @@
     <div
       class="flex h-full gap-8 workoutModalDesktop:justify-between workoutModalMobile:flex-col items-start"
     >
-      <div class="h-full">
-        <img
-          src={activeWorkout.gifUrl}
-          alt={activeWorkout.name}
-          class="rounded-lg"
-        />
-      </div>
+      {#if imageError}
+        <div class="h-full">
+          <img
+            src={activeWorkout.gifUrl}
+            alt={activeWorkout.name}
+            class="rounded-lg"
+            on:error={() => imageError = true}
+          />
+        </div>
+      {/if}
       <div class="text-white w-full text-left">
         <Card
           override={{

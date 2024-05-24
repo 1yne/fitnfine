@@ -26,6 +26,16 @@ export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+export function capitalizeWords(string: string) {
+  let capitalisedStringsArr: string[] = []
+  const splitStrings = string.split(" ")
+  splitStrings.forEach((splitString) => {
+    capitalisedStringsArr.push(splitString.charAt(0).toUpperCase() + splitString.slice(1))
+  })
+  let capitalisedStrings = capitalisedStringsArr.join(" ")
+  console.log(capitalisedStrings)
+}
+
 export const storedEdamamResponse: UserDietStoreType[] = [
   {
     id: "healthy_brown_rice_and_hemp_seed_salad",
