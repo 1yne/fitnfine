@@ -189,7 +189,7 @@ export const storedWorkouts = [
     equipment: "body weight",
     gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/0001.gif",
     id: "0001",
-    name: "3/4 sit-up",
+    name: "3/4 Sit-up",
     target: "abs",
   },
   {
@@ -197,7 +197,7 @@ export const storedWorkouts = [
     equipment: "body weight",
     gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/0002.gif",
     id: "0002",
-    name: "45° side bend",
+    name: "45° Side Bend",
     target: "abs",
   },
   {
@@ -205,7 +205,7 @@ export const storedWorkouts = [
     equipment: "body weight",
     gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/0003.gif",
     id: "0003",
-    name: "air bike",
+    name: "Air Bike",
     target: "abs",
   },
   {
@@ -213,7 +213,7 @@ export const storedWorkouts = [
     equipment: "body weight",
     gifUrl: "http://d205bpvrqc9yn1.cloudfront.net/1512.gif",
     id: "1512",
-    name: "all fours squad stretch",
+    name: "All Fours Squad Stretch",
     target: "quads",
   },
 ];
