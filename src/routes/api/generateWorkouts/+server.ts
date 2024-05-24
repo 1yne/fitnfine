@@ -1,15 +1,12 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { Configuration, OpenAIApi } from "openai";
-import axios from "axios";
+import OpenAIModule from "openai";
 import User from "$lib/schema/User";
 import { json } from "@sveltejs/kit";
 import {
   storedWorkouts,
-  storedOpenAIWorkoutResponse,
   capitalizeFirstLetter,
 } from "$lib/utils";
 import { allExercises } from "$lib/exerciseData.ts";
-import fs from "fs";
 import { dev } from "$app/environment";
 
 export const POST: RequestHandler = async ({ url, cookies }) => {
@@ -22,10 +19,9 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
     const userData = await User.findOne({
       userAuthToken: cookies.get("session"),
     });
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_KEY,
+    const openai = new OpenAIModule({
+      apiKey: process.env.OPENAI_KEY
     });
-    const openai = new OpenAIApi(configuration);
 
     // const options = {
     //   method: 'GET',
@@ -39,7 +35,7 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
 
     // const exerciseDB = await axios.request(options)
 
-    const response = await openai.createCompletion({
+    const response = await openai.completions.create({
       model: "text-davinci-003",
       prompt: `List five simple exercises that a person weighing ${userData.weight.toString()}kg and ${userData.height.toString()}cm tall can do at home`,
       temperature: 0.7,
@@ -49,14 +45,14 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
       presence_penalty: 0,
     });
 
-    let workoutChoices: string[] = response.data.choices[0].text
+    let workoutChoices: string[] = response.choices[0].text
       ?.split(/\r?\n/)
       .filter((val) => {
         return val.length !== 0;
       })
       .map((choice) => choice.slice(3));
 
-    let workouts = [];
+    let workouts: any = [];
 
     for (var i = 0; i < workoutChoices.length; i++) {
       let matches = allExercises.filter((val) =>

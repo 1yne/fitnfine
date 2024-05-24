@@ -1,8 +1,8 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAIModule from "openai";
 import axios from "axios";
 import { json } from "@sveltejs/kit";
-import { storedEdamamResponse, storedOpenAIDietResponse } from "$lib/utils";
+import { storedEdamamResponse } from "$lib/utils";
 import { dev } from "$app/environment";
 
 export const POST: RequestHandler = async ({ request }) => {
@@ -16,21 +16,21 @@ export const POST: RequestHandler = async ({ request }) => {
       filters.length > 0 ? `${filters.join(" ")} ` : ""
     }food items`;
 
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_KEY,
-    });
-    const openai = new OpenAIApi(configuration);
-    const response: any = await openai.createCompletion({
-      model: "text-babbage-001",
+    const openai = new OpenAIModule({
+      apiKey: process.env.OPENAI_KEY
+    })
+
+    const response = await openai.completions.create({
+      model: "gpt-3.5-turbo-instruct",
       prompt,
-      temperature: 0.7,
+      temperature: 1,
       max_tokens: 256,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
     });
 
-    let recipeChoices: string[] = response.data.choices[0].text
+    let recipeChoices: string[] = response.choices[0].text
       .split(/\r?\n/)
       .filter((val: string) => {
         return val.length !== 0;
