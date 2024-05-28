@@ -44,7 +44,7 @@
     {#if $page.url.pathname === "/dashboard"}
       <div class="greeting">
         <h1
-          class="font-nunito text-3xl font-extrabold"
+          class="font-nunito text-3xl font-bold"
           in:fly|global={{ y: -50, duration: 500, delay: 700 }}
           out:fly|global={{ y: -50, duration: 500 }}
         >

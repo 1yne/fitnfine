@@ -2,6 +2,9 @@
   import WorkoutCard from "$lib/components/WorkoutCard.svelte";
   import RecipeCard from "$lib/components/RecipeCard.svelte";
   import CheckMark from "carbon-icons-svelte/lib/CheckmarkFilled.svelte";
+  import Filter from "carbon-icons-svelte/lib/Filter.svelte";
+  import FavoriteFilled from "carbon-icons-svelte/lib/FavoriteFilled.svelte";
+  import FilterEdit from "carbon-icons-svelte/lib/FilterEdit.svelte";
   import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
   import { userDietStore } from "$lib/stores/userDietStore";
   import { exerciseDataStore } from "$lib/stores/exerciseData";
@@ -20,7 +23,6 @@
   import type { UserDietStoreType, ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
   import { browser } from "$app/environment";
-  import FavoriteFilled from "carbon-icons-svelte/lib/FavoriteFilled.svelte";
   export let data: PageData;
 
   import { onMount } from "svelte";
@@ -313,7 +315,7 @@
             src={activeWorkout.gifUrl}
             alt={activeWorkout.name}
             class="rounded-lg"
-            on:error={() => imageError = true}
+            on:error={() => (imageError = true)}
           />
         </div>
       {/if}
@@ -371,7 +373,7 @@
 </Modal>
 
 <div class="p-5 pt-0 text-white">
-  <h1 class="text-xl font-extrabold my-3">Recommended workouts:</h1>
+  <h1 class="text-xl my-3">Recommended workouts:</h1>
   <Divider />
   {#if !workoutLoading}
     <SimpleGrid
@@ -405,12 +407,18 @@
   <br />
   <div>
     <div class="flex justify-between">
-      <h1 class="text-xl font-extrabold">Recommended recipes:</h1>
+      <h1 class="text-xl">Recommended recipes:</h1>
       <div class="flex items-center">
         <button
-          class="bg-cardBG py-1 px-3 transition-all hover:bg-cardBGHover rounded-lg"
-          on:click={() => (modalOpened = true)}>Add filters</button
+          class="py-1 px-3 transition-all hover:text-tealHover rounded-lg"
+          on:click={() => (modalOpened = true)}
         >
+          {#if chosenFilters.length == 0}
+            <Filter size={24} />
+          {:else}
+            <FilterEdit size={24} />
+          {/if}
+        </button>
       </div>
     </div>
     <Divider />
@@ -419,10 +427,10 @@
         cols={windowWidth > 680
           ? 4
           : windowWidth > 500
-          ? 3
-          : windowWidth > 350
-          ? 2
-          : 1}
+            ? 3
+            : windowWidth > 350
+              ? 2
+              : 1}
         class="transition-all"
       >
         {#if $userDietStore.length > 0 && !dietLoading}
