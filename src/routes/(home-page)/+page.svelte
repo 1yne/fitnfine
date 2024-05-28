@@ -17,7 +17,7 @@
       ><Logo size="48" /></a
     >
   </div>
-  <div class="flex bg-darkBG justify-between">
+  <div class="flex bg-darkBG justify-center">
     <div class="contentWrapper w-1/2 flex-col flex items-center">
       <div class="w-3/4 flex flex-col textWrapper mt-16">
         <h1 class="text-orange font-righteous heading uppercase text-8xl">

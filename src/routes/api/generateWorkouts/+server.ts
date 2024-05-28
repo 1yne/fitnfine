@@ -4,7 +4,7 @@ import User from "$lib/schema/User";
 import { json } from "@sveltejs/kit";
 import {
   storedWorkouts,
-  capitalizeFirstLetter,
+  capitalizeWords,
 } from "$lib/utils";
 import { allExercises } from "$lib/exerciseData.ts";
 import { dev } from "$app/environment";
@@ -68,7 +68,7 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
       matches.forEach((match) => {
         workouts.push({
           ...match,
-          name: capitalizeFirstLetter(match.name),
+          name: capitalizeWords(match.name),
         });
       });
     }
