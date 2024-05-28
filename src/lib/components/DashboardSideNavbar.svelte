@@ -33,7 +33,7 @@
           ><img
             src={$currentUserStore.profilePicture || "/defaultPic.jpeg"}
             alt="profile"
-            class="rounded-full flex w-16 h-10"
+            class="rounded-full flex w-8"
           /></a
         >
       </div>
@@ -44,14 +44,14 @@
           rel="noreferrer"
         >
           <LogoGithub
-            size={40}
+            size={32}
             class="fill-white hover:fill-gray-300 transition-all"
           />
         </a>
       </div>
       <button on:click={logout}>
         <Exit
-          size={35}
+          size={32}
           class="text-yellow hover:text-yellowHover transition-all"
         />
       </button>
