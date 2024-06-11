@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Card } from "@svelteuidev/core";
+  import { Card } from "flowbite-svelte";
   import { goto } from "$app/navigation";
   import Fire from "carbon-icons-svelte/lib/Fire.svelte";
 
@@ -11,11 +11,10 @@
 </script>
 
 <Card
-  override={{ backgroundColor: "#353536", color: "white" }}
-  class="hover:bg-cardBGHover transition-all cursor-pointer"
+  class="hover:bg-cardBGHover transition-all cursor-pointer bg-cardBG border-none p-4 text-white"
 >
   <button on:click={() => goto(`/dashboard/recipes/${id}`)} class="w-full">
-    <img src={thumbnail} alt="" class="w-full max-h-40 rounded-md" />
+    <img src={thumbnail} alt="" class="w-full max-h-40 rounded-md border-none" />
     <div class="my-4 flex flex-col items-center w-full text-center gap-4">
       <h1 class="text-xl">{name}</h1>
       <div class="flex justify-center w-full gap-4">

@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { TextInput, Notification } from "@svelteuidev/core";
+  import { Input, Alert } from "flowbite-svelte";
   import type { ActionData } from "./$types";
   export let form: ActionData;
-  import { browser } from "$app/environment";
   import { fly } from "svelte/transition";
 
   const onChange = () => {
@@ -25,11 +24,7 @@
 
 <div class="h-[100vh] flex w-full overflow-hidden wrapper">
   <div class="w-8/12 overflow-hidden imageWrapper">
-    <img
-      src="/SignUpImage.jpeg"
-      alt="A fruit bowl"
-      class="image"
-    />
+    <img src="/SignUpImage.jpeg" alt="A fruit bowl" class="image" />
   </div>
   <div class="w-[33rem]">
     <div class="h-full w-full">
@@ -49,101 +44,66 @@
             action="?/signup"
           >
             {#if form?.invalid}
-              <Notification color="red" withCloseButton={false} class="w-full">
+              <Alert color="red" class="w-full" border>
                 {form.error}
-              </Notification>
+              </Alert>
             {/if}
-            <TextInput
+            <Input
               placeholder="Username"
+              required
+              class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput
+              `}
               name="username"
-              required={true}
-              class="!font-nunito w-full"
-              override={{
-                input: {
-                  py: "1rem",
-                  px: "1rem",
-                  backgroundColor: "#1c1c1c !important",
-                  borderColor: "#1c1c1c !important",
-                  borderBottomColor: "#029987 !important",
-                  color: "white !important",
-                },
-              }}
-              error={form?.invalid}
               on:input={onChange}
             />
-            <TextInput
+            <Input
               placeholder="Email"
-              class="!font-nunito w-full"
+              required
+              class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput
+              `}
               name="email"
               type="email"
-              required={true}
-              override={{
-                input: {
-                  py: "1rem",
-                  px: "1rem",
-                  backgroundColor: "#1c1c1c !important",
-                  borderColor: "#1c1c1c !important",
-                  borderBottomColor: "#029987 !important",
-                  color: "white !important",
-                },
-              }}
-              error={form?.invalid}
               on:input={onChange}
             />
-            <TextInput
+            <Input
               placeholder="Password"
-              class="!font-nunito w-full"
+              required
+              class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput
+              `}
               name="password"
-              required={true}
               type="password"
-              override={{
-                input: {
-                  py: "1rem",
-                  px: "1rem",
-                  backgroundColor: "#1c1c1c !important",
-                  borderColor: "#1c1c1c !important",
-                  borderBottomColor: "#029987 !important",
-                  color: "white !important",
-                },
-              }}
-              error={form?.invalid}
               on:input={onChange}
             />
-            <div class="flex">
-              <TextInput
-                placeholder="Weight (kg)"
-                class="!font-nunito mr-4"
+            <div class="flex w-full gap-4">
+              <Input
+                placeholder="Weight"
+                required
+                class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput w-1/2
+              `}
                 name="weight"
-                required={true}
-                override={{
-                  input: {
-                    py: "1rem",
-                    px: "1rem",
-                    backgroundColor: "#1c1c1c !important",
-                    borderColor: "#1c1c1c !important",
-                    borderBottomColor: "#029987 !important",
-                    color: "white !important",
-                  },
-                }}
-                error={form?.invalid}
                 on:input={onChange}
               />
-              <TextInput
-                placeholder="Height (cm)"
-                class="!font-nunito"
+              <Input
+                placeholder="Height"
+                required
+                class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput w-1/2
+              `}
                 name="height"
-                required={true}
-                override={{
-                  input: {
-                    py: "1rem",
-                    px: "1rem",
-                    backgroundColor: "#1c1c1c !important",
-                    borderColor: "#1c1c1c !important",
-                    borderBottomColor: "#029987 !important",
-                    color: "white !important",
-                  },
-                }}
-                error={form?.invalid}
                 on:input={onChange}
               />
             </div>
@@ -178,52 +138,31 @@
             action="?/login"
           >
             {#if form?.invalid}
-              <Notification
-                color="red"
-                withCloseButton={false}
-                class="w-full mb-7"
-              >
+              <Alert color="red" class="w-full" border>
                 {form.error}
-              </Notification>
+              </Alert>
             {/if}
-            <TextInput
+            <Input
               placeholder="Email"
-              class="!font-nunito w-full"
+              required
+              class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput mb-7
+              `}
               name="email"
-              type="email"
-              required={true}
-              override={{
-                input: {
-                  py: "1rem",
-                  px: "1rem",
-                  backgroundColor: "#1c1c1c !important",
-                  borderColor: "#1c1c1c !important",
-                  borderBottomColor: "#029987 !important",
-                  color: "white !important",
-                  marginBottom: "1.75rem !important",
-                },
-              }}
-              error={form?.invalid}
               on:input={onChange}
             />
-            <TextInput
+            <Input
               placeholder="Password"
-              class="!font-nunito w-full"
+              required
+              class={`
+                bg-background font-nunito text-white transition-all border-b
+                border-background border-b-teal border-solid focus:border-teal 
+                focus:ring-teal textInput mb-7
+              `}
               name="password"
-              required={true}
               type="password"
-              override={{
-                input: {
-                  py: "1rem",
-                  px: "1rem",
-                  backgroundColor: "#1c1c1c !important",
-                  borderColor: "#1c1c1c !important",
-                  borderBottomColor: "#029987 !important",
-                  color: "white !important",
-                  marginBottom: "1.75rem !important",
-                },
-              }}
-              error={form?.invalid}
               on:input={onChange}
             />
             <button
@@ -245,3 +184,9 @@
     </div>
   </div>
 </div>
+
+<style>
+  :global(.textInput::placeholder) {
+    font-size: 1rem;
+  }
+</style>

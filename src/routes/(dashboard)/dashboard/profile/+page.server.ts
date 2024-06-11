@@ -1,8 +1,8 @@
-import type { LayoutServerLoad } from "./$types";
+import type { PageServerLoad} from "./$types";
 import User from "$lib/schema/User.ts";
 import Workouts from "$lib/schema/Workouts.ts";
 
-export const load: LayoutServerLoad = async ({
+export const load: PageServerLoad = async ({
   url: { pathname },
   request,
   cookies,

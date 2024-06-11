@@ -1,6 +1,5 @@
 <script lang="ts">
   import "../../app.css";
-  import { SvelteUIProvider } from "@svelteuidev/core";
   import { navigating } from "$app/stores";
   import { goto } from "$app/navigation";
   import Transition from "$lib/components/PageTransition.svelte";
@@ -31,13 +30,11 @@
   export let data: PageData;
 </script>
 
-<SvelteUIProvider override={{ height: "100%", backgroundColor: "#1c1c1c" }}>
-  <div class="content h-full">
-    <Transition refresh={data.pathname}>
-      <slot />
-    </Transition>
-  </div>
-</SvelteUIProvider>
+<div class="content h-full bg-background">
+  <Transition refresh={data.pathname}>
+    <slot />
+  </Transition>
+</div>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");

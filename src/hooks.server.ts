@@ -1,4 +1,3 @@
-import { prepareStylesSSR } from "@svelteuidev/core";
 import mongoose from "mongoose";
 import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
@@ -52,7 +51,6 @@ async function verifyUserIsLoggedIn({ event, resolve }) {
 }
 
 export const handle: Handle = sequence(
-  prepareStylesSSR,
   connectToDB,
   verifyUserIsLoggedIn,
 );

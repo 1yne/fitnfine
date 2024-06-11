@@ -1,20 +1,19 @@
 <script lang="ts">
-  import { Card, Badge } from "@svelteuidev/core";
+  import { Card, Badge } from "flowbite-svelte";
 
   export let name: string, bodyPart: string, target: string;
 </script>
 
 <Card
-  override={{ backgroundColor: "#353536", color: "white" }}
-  class="hover:bg-cardBGHover transition-all"
+  class="hover:bg-cardBGHover transition-all bg-cardBG border-none p-4 text-white"
 >
-  <div class="text-left">
-    <h1 class="text-xl font-black">{name}</h1>
+  <div class="text-left mb-1">
+    <h1 class="text-xl font-black mb">{name}</h1>
     <h1>Targets the {target}</h1>
   </div>
   <div class="flex justify-between">
     <div class="text-left">
-      <Badge>{bodyPart}</Badge>
-    </div>
+      <Badge class="bg-teal uppercase text-white" border color="green">{bodyPart}</Badge>
+    </div> 
   </div>
 </Card>

@@ -101,10 +101,11 @@ export const actions: Actions = {
       }
     ).then(() => {});
 
-    /* @migration task: add path argument */ cookies.set("session", newUserAuthToken, {
-            sameSite: "strict",
-            maxAge: 60 * 60 * 24 * 7,
-          });
+    cookies.set("session", newUserAuthToken, {
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
     redirect(303, "/dashboard");
   },
 };

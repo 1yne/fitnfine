@@ -6,34 +6,12 @@
   import { fly } from "svelte/transition";
   import { goto } from "$app/navigation";
   import Logo from "$lib/icons/Logo.svelte";
-  import { Menu, createStyles } from "@svelteuidev/core";
   import UserAvatarFilledAlt from "carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte";
-
-  const useStyles = createStyles(() => ({
-    " > button": {
-      backgroundColor: "#264653",
-    },
-    " > button:hover": {
-      backgroundColor: "#1b323b",
-    },
-    " > button > svg": {
-      color: "#029987",
-      size: "1.25rem",
-    },
-    " > div > .svelteui-Menu-svelteui-Menu-body": {
-      backgroundColor: "#353536",
-      border: "1px solid #353536",
-    },
-    " > div > .svelteui-Menu-svelteui-Menu-body:hover": {
-      backgroundColor: "#494a4a",
-      border: "1px solid #494a4a",
-    },
-    " > div > .svelteui-Menu-svelteui-Menu-body > .svelteui-MenuItem-root:hover":
-      {
-        backgroundColor: "#494a4a",
-      },
-  }));
-  $: ({ getStyles } = useStyles());
+  import OverflowMenuVertical from "carbon-icons-svelte/lib/OverflowMenuVertical.svelte";
+  import {
+    Dropdown,
+    DropdownItem,
+  } from "flowbite-svelte";
 </script>
 
 <div
@@ -74,11 +52,19 @@
     {/if}
   </div>
   <div class="back-arrow">
-    <Menu class={`${getStyles()} font-nunito transition-all rounded-lg`}>
-      <a href="/dashboard/profile"
-        ><Menu.Item icon={UserAvatarFilledAlt}>Profile</Menu.Item></a
-      >
-      <Menu.Item icon={ArrowLeft} color="red">Logout</Menu.Item>
-    </Menu>
+    <OverflowMenuVertical size={24} class="dots-menu" />
+    <Dropdown
+      triggeredBy=".dots-menu"
+      classContainer="font-nunito text-white !bg-background rounded-3xl z-[100] p-2 !left-[545px]"
+    >
+      <DropdownItem>
+        <a href="/dashboard/profile" class="flex items-center gap-4">
+          <UserAvatarFilledAlt size={24} />Profile
+        </a>
+      </DropdownItem>
+      <DropdownItem class="flex items-center gap-4">
+        <ArrowLeft size={24} />Logout
+      </DropdownItem>
+    </Dropdown>
   </div>
 </div>

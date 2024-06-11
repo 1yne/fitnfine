@@ -8,17 +8,7 @@
   import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
   import { userDietStore } from "$lib/stores/userDietStore";
   import { exerciseDataStore } from "$lib/stores/exerciseData";
-  import {
-    SimpleGrid,
-    Loader,
-    Group,
-    Divider,
-    Modal,
-    createStyles,
-    Button,
-    Badge,
-    Card,
-  } from "@svelteuidev/core";
+  import { Spinner, Modal, Button } from "flowbite-svelte";
   import type { PageData } from "./$types";
   import type { UserDietStoreType, ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
@@ -56,44 +46,6 @@
   ];
 
   let chosenFilters: FilterChipType[] = [];
-
-  const dietFilterStyles = createStyles(() => ({
-    ".svelteui-Modal-title": {
-      fontSize: "1.3rem",
-      fontFamily: "Nunito",
-      color: "white",
-    },
-    ".svelteui-Modal-close > svg": {
-      size: "1.5rem",
-      transitionProperty: "all",
-      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-      transitionDuration: "150ms",
-      borderRadius: "0.5rem",
-    },
-    ".svelteui-Modal-close:hover": {
-      backgroundColor: "#1c1c1c",
-    },
-    ".svelteui-Modal-close > svg:hover": {
-      size: "1.5rem",
-      color: "#029987",
-    },
-    ".svelteui-Modal-header": {
-      marginBottom: "8px",
-    },
-    ".svelteui-Modal-modal": {
-      backgroundColor: "#1c1c1c !important",
-      width: "auto",
-      maxWidth: "440px",
-    },
-  }));
-  $: ({ getStyles: getDietFilterStyles } = dietFilterStyles());
-
-  const workoutModalStyles = createStyles(() => ({
-    ".svelteui-Modal-modal": {
-      backgroundColor: "#1c1c1c !important",
-    },
-  }));
-  $: ({ getStyles: getWorkoutModalStyles } = workoutModalStyles());
 
   async function loadDietData(filters: FilterChipType[]) {
     const dietResponse = await fetch("/api/generateDiet", {
@@ -216,33 +168,26 @@
 </svelte:head>
 
 <Modal
-  opened={modalOpened}
+  bind:open={modalOpened}
   on:close={closeModal}
   title="Filters:"
-  centered
-  overlayColor="#264653"
-  overlayOpacity={0.55}
-  overlayBlur={3}
-  class={`${getDietFilterStyles()} font-nunito`}
+  classHeader="bg-background text-white header"
+  classFooter="bg-background text-white !border-t !border-gray-500 justify-end"
+  classBody="!border-t !border-gray-500"
+  class="font-nunito bg-background"
+  outsideclose
 >
   <h1 class="mb-1 text-lg text-white">Added filters:</h1>
   {#if chosenFilters.length > 0}
     <div class="flex gap-2 flex-wrap">
       {#each chosenFilters as chosenFilter}
         <Button
-          size="xs"
+          size="sm"
           on:click={() => changeFilters(chosenFilter, "remove")}
-          override={{
-            backgroundColor: "#353536",
-            border: "#029987 1px solid",
-            borderRadius: "999px",
-            color: "white",
-            fontFamily: "Nunito",
-            fontSize: "1.1rem",
-          }}
-          class="hover:!bg-cardBGHover transition-all"
+          color="green"
+          class="hover:!bg-cardBGHover transition-all bg-cardBG border-solid border border-teal"
         >
-          <CheckMark slot="leftIcon" class="text-teal" />
+          <CheckMark class="text-teal mr-2" />
           {chosenFilter.label}
         </Button>
       {/each}
@@ -250,23 +195,16 @@
   {:else}
     <p class="text-white">There aren't any filters added yet!</p>
   {/if}
-  <Divider override={{ mt: "0.75rem !important" }} />
+  <hr class="mb-4 mt-3 border-gray-700" />
   <h1 class="mb-1 text-lg text-white">Available filters:</h1>
   {#if availableFilters.length > 0}
     <div class="flex gap-2 flex-wrap">
       {#each availableFilters as availableFilter}
         <Button
-          size="xs"
+          size="sm"
           on:click={() => changeFilters(availableFilter, "add")}
-          override={{
-            backgroundColor: "#353536",
-            border: "black 1px solid",
-            borderRadius: "999px",
-            color: "white",
-            fontFamily: "Nunito",
-            fontSize: "1.1rem",
-          }}
-          class="hover:!bg-cardBGHover transition-all"
+          color="green"
+          class="hover:!bg-cardBGHover transition-all bg-cardBG"
         >
           {availableFilter.label}
         </Button>
@@ -276,34 +214,32 @@
     <p class="text-white">There aren't any filters yet to be added!</p>
   {/if}
 
-  <Group position="right">
+  <svelte:fragment slot="footer">
     <Button
       on:click={saveFilters}
-      loading={modalLoading}
-      override={{
-        fontFamily: "Nunito",
-        mt: "0.5rem",
-        fontSize: "1.1rem",
-        backgroundColor: "#e6b335",
-      }}
-      class="transition-all hover:!bg-yellowHover">Save</Button
+      size="sm"
+      color="green"
+      class="bg-yellow hover:!bg-yellowHover text-black transition-all"
     >
-  </Group>
+      {#if modalLoading}
+        <Spinner size="4" class="mr-2" color="white" />
+      {/if}
+      Save
+    </Button>
+  </svelte:fragment>
 </Modal>
 
 <Modal
-  opened={workoutModalLoading}
+  bind:open={workoutModalLoading}
   on:close={() => {
     activeWorkout = null;
     workoutModalLoading = false;
   }}
-  class={`${getWorkoutModalStyles()} font-nunito`}
-  centered
-  overlayColor="#264653"
-  overlayOpacity={0.55}
-  overlayBlur={3}
-  withCloseButton={false}
-  size="full"
+  class="font-nunito"
+  classHeader="bg-background text-white header"
+  classBody="bg-background !border-t !border-gray-500"
+  title={activeWorkout?.name}
+  outsideclose
 >
   {#if activeWorkout}
     <div
@@ -319,34 +255,11 @@
           />
         </div>
       {/if}
-      <div class="text-white w-full text-left">
-        <Card
-          override={{
-            backgroundColor: "#353536",
-            color: "white",
-            width: "100%",
-          }}
-        >
-          <div class="flex w-full gap-4">
-            <h1 class="text-4xl">{activeWorkout.name}</h1>
-            <div class="flex items-center">
-              <Badge>{activeWorkout.bodyPart}</Badge>
-            </div>
-          </div>
-        </Card>
-        <Card
-          override={{
-            backgroundColor: "rgba(53, 53, 54, 0.5)",
-            color: "white",
-            width: "100%",
-            my: "0.75rem",
-          }}
-        >
-          <h1 class="text-xl">Exercises the {activeWorkout.target}</h1>
-          <h1 class="text-lg">
-            Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
-          </h1>
-        </Card>
+      <div class="text-white w-full text-left text-lg">
+        <h1>Exercises the {activeWorkout.target}</h1>
+        <h1>
+          Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
+        </h1>
         <div
           class="flex workoutModalMobile:justify-start workoutModalDesktop:justify-end"
         >
@@ -374,12 +287,9 @@
 
 <div class="p-5 pt-0 text-white">
   <h1 class="text-xl my-3">Recommended workouts:</h1>
-  <Divider />
+  <hr class="mb-4" />
   {#if !workoutLoading}
-    <SimpleGrid
-      cols={windowWidth > 800 ? 3 : windowWidth > 500 ? 2 : 1}
-      class="transition-all"
-    >
+    <div class="transition-all w-full grid gap-4 cardGridDashboardW">
       {#if $userWorkoutDataStore.length > 0 && !workoutLoading}
         {#each $userWorkoutDataStore as userWorkout, i}
           {#if userWorkout.name}
@@ -398,11 +308,11 @@
       {:else}
         <h1>There aren't any workouts for you! Please try again</h1>
       {/if}
-    </SimpleGrid>
+    </div>
   {:else}
-    <Group position="center">
-      <Loader variant="bars" class="fill-teal" />
-    </Group>
+    <div class="w-full flex justify-center">
+      <Spinner class="fill-teal" />
+    </div>
   {/if}
   <br />
   <div>
@@ -421,18 +331,9 @@
         </button>
       </div>
     </div>
-    <Divider />
+    <hr class="mb-4 mt-2" />
     {#if !dietLoading}
-      <SimpleGrid
-        cols={windowWidth > 680
-          ? 4
-          : windowWidth > 500
-            ? 3
-            : windowWidth > 350
-              ? 2
-              : 1}
-        class="transition-all"
-      >
+      <div class="transition-all w-full grid gap-4 cardGridDashboardR">
         {#if $userDietStore.length > 0 && !dietLoading}
           {#each $userDietStore as userDiet, i}
             {#if userDiet.name}
@@ -450,11 +351,53 @@
         {:else}
           <h1>There aren't any recipes for you! Please try again</h1>
         {/if}
-      </SimpleGrid>
+      </div>
     {:else}
-      <Group position="center">
-        <Loader variant="bars" class="fill-teal" />
-      </Group>
+      <div class="w-full flex justify-center">
+        <Spinner class="fill-teal" />
+      </div>
     {/if}
   </div>
 </div>
+
+<style>
+  @media (min-width: 800px) {
+    .cardGridDashboardW {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (500px <= width <= 799) {
+    .cardGridDashboardW {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 499px) {
+    .cardGridDashboardW {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  @media (min-width: 680px) {
+    .cardGridDashboardR {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (500px <= width <= 679) {
+    .cardGridDashboardR {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (350px <= width <= 499px) {
+    .cardGridDashboardR {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 349px) {
+    .cardGridDashboardR {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  :global(.header > button:hover) {
+    background-color: #494a4a;
+  }
+</style>

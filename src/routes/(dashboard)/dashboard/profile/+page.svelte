@@ -1,24 +1,14 @@
 <script lang="ts">
   import { currentUserStore } from "$lib/stores/currentUser";
-  import {
-    Card,
-    Button,
-    SimpleGrid,
-    Modal,
-    createStyles,
-    Badge,
-    Divider,
-    Loader,
-    Group,
-  } from "@svelteuidev/core";
-  import Edit from "carbon-icons-svelte/lib/Edit.svelte";
+  import { Card, Avatar, Spinner, Modal } from "flowbite-svelte";
+  import Pen from "carbon-icons-svelte/lib/Pen.svelte";
+  import { SvelteToast, toast } from "@zerodevx/svelte-toast";
   import type { PageData } from "./$types";
   import type { ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
   import WorkoutCard from "$lib/components/WorkoutCard.svelte";
   import { capitalizeFirstLetter } from "$lib/utils";
   import FavoriteFilled from "carbon-icons-svelte/lib/FavoriteFilled.svelte";
-  import Checkmark from "carbon-icons-svelte/lib/Checkmark.svelte";
   import { onMount } from "svelte";
 
   import { invalidateAll } from "$app/navigation";
@@ -28,25 +18,21 @@
     windowWidth: number,
     noOfLikes = 0,
     userLikedWorkout = false,
-    workoutLoading = true,
-    updated = false;
+    workoutLoading = true, 
+    imageError = false;
+
   export let data: PageData;
 
-  $: profilePictureURL =
-    $currentUserStore.profilePicture || "./defaultPic.jpeg";
+  $: profilePictureURL = $currentUserStore.profilePicture || "/defaultPic.jpeg";
 
   onMount(() => {
-    setTimeout(() => {
-      workoutLoading = false;
-    }, Math.floor(Math.random() * (2000 - 500 + 1)) + 500);
+    setTimeout(
+      () => {
+        workoutLoading = false;
+      },
+      Math.floor(Math.random() * (2000 - 500 + 1)) + 500
+    );
   });
-
-  const workoutModalStyles = createStyles(() => ({
-    ".svelteui-Modal-modal": {
-      backgroundColor: "#1c1c1c !important",
-    },
-  }));
-  $: ({ getStyles: getWorkoutModalStyles } = workoutModalStyles());
 
   async function updateLikes(workout: ExerciseDataType) {
     let data: ExerciseDataType;
@@ -85,12 +71,26 @@
         method: "POST",
         body: JSON.stringify({ pictureData: result }),
       });
-      updated = true;
-      setTimeout(() => (updated = false), 1500);
+      toast.push(`<h1>Avatar changed</h1>`, {
+        theme: {
+          "--toastColor": "mintcream",
+          "--toastBackground": "#029987",
+          "--toastBarBackground": "#218074",
+          "--toastBorderRadius": "6px",
+          "--toastPadding": "0.5rem",
+        },
+      });
       profilePictureURL = result;
       invalidateAll();
     };
   }
+
+  const options = {
+    duration: 3000,
+    initial: 1,
+    next: 0,
+    intro: { x: 256 },
+  };
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -99,68 +99,58 @@
   <title>Profile | FITnFINE</title>
 </svelte:head>
 
+<SvelteToast {options} />
+
 <div class="px-6 py-5">
   <div class="flex profileMobile:flex-col gap-8 w-full mb-4">
     <div
-      class="flex flex-col gap-8 profileDesktop:mr-8 profileMobile:w-full profileMobile:items-center"
+      class="flex flex-col gap-8 profileDesktop:mr-8 profileMobile:w-full profileMobile:items-center profileDesktop:max-w-[20rem]"
     >
-      <div
-        class="w-full flex rounded-full justify-center relative z-[1] imageWrapper profileMobile:max-w-[16rem] profileDesktop:max-w-[24rem] cursor-pointer"
-      >
-        <img src={profilePictureURL} alt="profile" class="rounded-full" />
+      <div class="avatarWrap relative">
+        <Avatar
+          src={profilePictureURL}
+          class="rounded-[5rem] z-[10000000] w-72"
+          size="none"
+        />
         <div
-          class={`absolute w-full h-full ${
-            updated ? "block bg-black/70" : "hidden"
-          } rounded-full transition-all`}
+          class="editBtn bg-teal transition-all absolute rounded-full right-0 -top-0 text-white cursor-pointer"
         >
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <div
-            class="h-full rounded-full"
+          <button
+            class="p-2"
             on:click={() => document.getElementById("profilePic")?.click()}
           >
-            <div class="flex justify-center items-center w-full h-full">
-              <input
-                type="file"
-                hidden
-                accept="image/*"
-                id="profilePic"
-                on:change={fileChange}
-              />
-              <h1 class="text-white flex gap-1 items-center text-xl">
-                {#if updated}
-                  <Checkmark fill="#52eb34" size={24} />Updated
-                {:else}
-                  <Edit size={24} />Change
-                {/if}
-              </h1>
-            </div>
-          </div>
+            <Pen size={24} />
+          </button>
+          <input
+            type="file"
+            hidden
+            accept="image/*"
+            id="profilePic"
+            on:change={fileChange}
+          />
         </div>
       </div>
-      <Card override={{ backgroundColor: "#353536", width: "100%" }}>
+      <Card class="bg-cardBG border-none min-w-[15rem] max-w-5xl">
         <h1 class="text-[1.3rem] text-white mb-1">
-          Username: {$currentUserStore.username}
+          Username: {data.userData.username}
         </h1>
         <h1 class="text-[1.3rem] text-white mb-1">
-          Height: {$currentUserStore.height}
+          Height: {data.userData.height}
         </h1>
         <h1 class="text-[1.3rem] text-white">
-          Weight: {$currentUserStore.weight}
+          Weight: {data.userData.weight}
         </h1>
       </Card>
     </div>
     <div class="w-full">
-      <h1 class="text-xl font-extrabold my-3 text-white">Liked workouts:</h1>
-      <Divider />
+      <h1 class="text-xl my-3 text-white">Liked workouts:</h1>
+      <hr class="mb-4" />
       {#if workoutLoading}
-        <Group position="center">
-          <Loader variant="bars" class="fill-teal" />
-        </Group>
+        <div class="flex justify-center w-full">
+          <Spinner color="green" />
+        </div>
       {:else if data.workouts.length > 0}
-        <SimpleGrid
-          cols={windowWidth > 940 ? 3 : windowWidth > 820 ? 2 : 1}
-          class="transition-all w-full"
-        >
+        <div class="transition-all w-full grid gap-4 cardGridProfile">
           {#each data.workouts as userWorkout, i}
             {#if userWorkout.name}
               <button
@@ -179,7 +169,7 @@
               </button>
             {/if}
           {/each}
-        </SimpleGrid>
+        </div>
       {:else}
         <h1 class="text-white">You haven't liked any workouts yet!</h1>
       {/if}
@@ -188,58 +178,36 @@
 </div>
 
 <Modal
-  opened={workoutModalLoading}
+  bind:open={workoutModalLoading}
   on:close={() => {
     activeWorkout = null;
     workoutModalLoading = false;
   }}
-  class={`${getWorkoutModalStyles()} font-nunito`}
-  centered
-  overlayColor="#264653"
-  overlayOpacity={0.55}
-  overlayBlur={3}
-  withCloseButton={false}
-  size="full"
+  class="font-nunito"
+  classHeader="bg-background text-white header"
+  classBody="bg-background !border-t !border-gray-500"
+  title={activeWorkout?.name}
+  outsideclose
 >
   {#if activeWorkout}
     <div
       class="flex h-full gap-8 workoutModalDesktop:justify-between workoutModalMobile:flex-col items-start"
     >
-      <div class="h-full">
-        <img
-          src={activeWorkout.gifUrl}
-          alt={activeWorkout.name}
-          class="rounded-lg"
-        />
-      </div>
-      <div class="text-white w-full text-left">
-        <Card
-          override={{
-            backgroundColor: "#353536",
-            color: "white",
-            width: "100%",
-          }}
-        >
-          <div class="flex w-full gap-4">
-            <h1 class="text-4xl">{activeWorkout.name}</h1>
-            <div class="flex items-center">
-              <Badge>{activeWorkout.bodyPart}</Badge>
-            </div>
-          </div>
-        </Card>
-        <Card
-          override={{
-            backgroundColor: "rgba(53, 53, 54, 0.5)",
-            color: "white",
-            width: "100%",
-            my: "0.75rem",
-          }}
-        >
-          <h1 class="text-xl">Exercises the {activeWorkout.target}</h1>
-          <h1 class="text-lg">
-            Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
-          </h1>
-        </Card>
+      {#if imageError}
+        <div class="h-full">
+          <img
+            src={activeWorkout.gifUrl}
+            alt={activeWorkout.name}
+            class="rounded-lg"
+            on:error={() => imageError = true}
+          />
+        </div>
+      {/if}
+      <div class="text-white w-full text-left text-lg">
+        <h1>Exercises the {activeWorkout.target}</h1>
+        <h1>
+          Equipment needed: {capitalizeFirstLetter(activeWorkout.equipment)}
+        </h1>
         <div
           class="flex workoutModalMobile:justify-start workoutModalDesktop:justify-end"
         >
@@ -266,18 +234,25 @@
 </Modal>
 
 <style>
-  .imageWrapper:hover > div {
-    display: block;
-    animation: fadeBGIn 0.2s forwards;
-    border: 1px solid #029987;
+  .editBtn:hover {
+    background-color: #218074;
   }
-
-  @keyframes fadeBGIn {
-    0% {
-      background-color: rgb(0 0 0 / 0);
+  @media (min-width: 940px) {
+    .cardGridProfile {
+      grid-template-columns: repeat(3, 1fr);
     }
-    100% {
-      background-color: rgb(0 0 0 / 0.7);
+  }
+  @media (820px <= width <= 939px) {
+    .cardGridProfile {
+      grid-template-columns: repeat(2, 1fr);
     }
+  }
+  @media (max-width: 819px) {
+    .cardGridProfile {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+  :global(.header > button:hover) {
+    background-color: #494a4a;
   }
 </style>

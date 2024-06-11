@@ -33,7 +33,7 @@ export function capitalizeWords(string: string) {
     capitalisedStringsArr.push(splitString.charAt(0).toUpperCase() + splitString.slice(1))
   })
   let capitalisedStrings = capitalisedStringsArr.join(" ")
-  console.log(capitalisedStrings)
+  return capitalisedStrings
 }
 
 export const storedEdamamResponse: UserDietStoreType[] = [

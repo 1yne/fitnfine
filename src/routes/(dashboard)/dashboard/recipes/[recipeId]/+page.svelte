@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { Card, Divider } from "@svelteuidev/core";
+  import { Card } from "flowbite-svelte"
   import { userDietStore } from "$lib/stores/userDietStore";
   import { page } from "$app/stores";
   import { capitalizeFirstLetter } from "$lib/utils";
   import Fire from "carbon-icons-svelte/lib/Fire.svelte";
-  import { browser } from "$app/environment";
 
   const dietData = $userDietStore.filter(
     (val) => val.id === $page.params.recipeId
@@ -16,7 +15,7 @@
 </svelte:head>
 
 
-<div>
+<div class="bg-background">
   <div class="mb-4">
     <div
       class="w-full h-96 backdrop-blur-md bg-cover bg-center bg-white bg-no-repeat"
@@ -35,17 +34,17 @@
                 rel="noreferrer"
                 class="transition-all hover:text-teal mr-2">{dietData.source}</a
               >
-              <Divider orientation="vertical" />
+              <div class="border-l-[1px] border-solid border-gray-300"></div>
             </div>
             <div class="flex">
               <p class="mr-2">Serves: {dietData.serves}</p>
-              <Divider orientation="vertical" />
+              <div class="border-l-[1px] border-solid border-gray-300"></div>
             </div>
             <div class="flex">
               <p class="mr-2">
                 Cuisine: {capitalizeFirstLetter(dietData.cuisineType[0])}
               </p>
-              <Divider orientation="vertical" />
+              <div class="border-l-[1px] border-solid border-gray-300"></div>
             </div>
             <div class="flex gap-1">
               <Fire size={20} />
@@ -58,14 +57,7 @@
   </div>
   <div class="px-5 mt-5 flex gap-8 w-full dietWrapper">
     <Card
-      override={{
-        backgroundColor: "#494a4a",
-        color: "white",
-        borderRadius: "0.5rem",
-        padding: "1.25rem",
-        display: "flex",
-      }}
-      class="drop-shadow-lg"
+      class="bg-cardBG border-none text-white drop-shadow-lg"
     >
       <div class="w-full">
         <h1 class="text-2xl mb-2">Steps:</h1>
@@ -79,14 +71,7 @@
       </div>
     </Card>
     <Card
-      override={{
-        backgroundColor: "#353536",
-        color: "white",
-        borderRadius: "0.5rem",
-        padding: "1.25rem",
-        display: "flex",
-      }}
-      class="drop-shadow-lg flex"
+      class="bg-cardBG border-none text-white drop-shadow-lg"
     >
       <div class="w-full">
         <h1 class="text-2xl">Ingredients:</h1>
