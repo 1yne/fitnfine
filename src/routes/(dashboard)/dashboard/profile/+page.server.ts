@@ -9,16 +9,18 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
   for await (const likedWorkoutId of userData.likedWorkouts) {
     const workoutData = await Workouts.findById(likedWorkoutId);
-    workouts.push({
-      bodyPart: workoutData.bodyPart,
-      equipment: workoutData.equipment,
-      gifUrl: workoutData.gifUrl,
-      id: workoutData._id,
-      name: workoutData.name,
-      target: workoutData.target,
-      likes: workoutData.likes,
-      likedUsers: workoutData.likedUsers,
-    });
+    if (workoutData) {
+      workouts.push({
+        bodyPart: workoutData.bodyPart,
+        equipment: workoutData.equipment,
+        gifUrl: workoutData.gifUrl,
+        id: workoutData._id,
+        name: workoutData.name,
+        target: workoutData.target,
+        likes: workoutData.likes,
+        likedUsers: workoutData.likedUsers,
+      });
+    }
   }
 
   const modifiedUserObj = {
