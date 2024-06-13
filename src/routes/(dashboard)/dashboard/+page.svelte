@@ -9,11 +9,9 @@
   import { userDietStore } from "$lib/stores/userDietStore";
   import { exerciseDataStore } from "$lib/stores/exerciseData";
   import { Spinner, Modal, Button } from "flowbite-svelte";
-  import type { PageData } from "./$types";
   import type { UserDietStoreType, ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
   import { browser } from "$app/environment";
-  export let data: PageData;
 
   import { onMount } from "svelte";
   import { capitalizeFirstLetter } from "$lib/utils";
@@ -57,7 +55,7 @@
   }
 
   onMount(async () => {
-    if (data.dontLoadData) {
+    if ($userWorkoutDataStore.length > 0) {
       dietLoading = false;
       workoutLoading = false;
     } else {
