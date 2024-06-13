@@ -1,12 +1,8 @@
-import type { PageServerLoad} from "./$types";
-import User from "$lib/schema/User.ts";
-import Workouts from "$lib/schema/Workouts.ts";
+import type { PageServerLoad } from "./$types";
+import User from "$lib/schema/User";
+import Workouts from "$lib/schema/Workouts";
 
-export const load: PageServerLoad = async ({
-  url: { pathname },
-  request,
-  cookies,
-}) => {
+export const load: PageServerLoad = async ({ cookies }) => {
   const session = cookies.get("session");
   const userData = await User.findOne({ userAuthToken: session });
   let workouts = [];

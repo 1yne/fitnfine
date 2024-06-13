@@ -1,8 +1,7 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import Workouts from "$lib/schema/Workouts.ts";
-import { allExercises } from "$lib/exerciseData.ts";
+import Workouts from "$lib/schema/Workouts";
 import { json } from "@sveltejs/kit";
-import User from "$lib/schema/User.ts";
+import User from "$lib/schema/User";
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
   const session = cookies.get("session");
@@ -27,10 +26,10 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
     workoutData.likes = noOfLikes;
     workoutData.likedUsers = workoutData.likedUsers.filter(
-      (val) => val !== userData._id
+      (val: any) => val !== userData._id
     );
     userData.likedWorkouts = userData.likedWorkouts.filter(
-      (val) => val !== workoutData._id
+      (val: any) => val !== workoutData._id
     );
 
     await Workouts.replaceOne({ _id: data.id }, workoutData);

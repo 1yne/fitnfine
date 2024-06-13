@@ -1,6 +1,6 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import Workouts from "$lib/schema/Workouts.ts";
-import { allExercises } from "$lib/exerciseData.ts";
+import Workouts from "$lib/schema/Workouts";
+import { allExercises } from "$lib/exerciseData";
 
 export const GET: RequestHandler = async () => {
   allExercises.forEach(async (exercise) => {

@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import User from "$lib/schema/User.ts";
+import User from "$lib/schema/User";
 import { json } from "@sveltejs/kit";
 
 export const POST: RequestHandler = async ({ url, cookies, request }) => {
