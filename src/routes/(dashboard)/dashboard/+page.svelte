@@ -7,7 +7,6 @@
   import FilterEdit from "carbon-icons-svelte/lib/FilterEdit.svelte";
   import { userWorkoutDataStore } from "$lib/stores/userWorkouts";
   import { userDietStore } from "$lib/stores/userDietStore";
-  import { exerciseDataStore } from "$lib/stores/exerciseData";
   import { Spinner, Modal, Button } from "flowbite-svelte";
   import type { UserDietStoreType, ExerciseDataType } from "$lib/types";
   import { fly } from "svelte/transition";
@@ -76,7 +75,6 @@
       const exerciseData = data.exerciseData;
 
       userWorkoutDataStore.set(workoutData);
-      exerciseDataStore.set(exerciseData);
 
       workoutLoading = false;
     }
