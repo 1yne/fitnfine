@@ -6,7 +6,7 @@ import {
   storedWorkouts,
   capitalizeWords,
 } from "$lib/utils";
-import { allExercises } from "$lib/exerciseData.ts";
+import { allExercises } from "$lib/exerciseData";
 import { dev } from "$app/environment";
 
 export const POST: RequestHandler = async ({ url, cookies }) => {
@@ -76,7 +76,6 @@ export const POST: RequestHandler = async ({ url, cookies }) => {
     workouts = workouts.slice(0, 5);
 
     return json({
-      exerciseData: allExercises,
       workoutData: workouts,
     });
   }

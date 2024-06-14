@@ -72,8 +72,6 @@
       const data = await workoutResponse.json();
       workoutData = data.workoutData;
 
-      const exerciseData = data.exerciseData;
-
       userWorkoutDataStore.set(workoutData);
 
       workoutLoading = false;
